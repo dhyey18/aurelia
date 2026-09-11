@@ -1,17 +1,21 @@
 import { Song } from "@/types/music";
 
 /**
- * Real local audio — long-form retro/classic mixes served from
- * public/audio/. Each file is treated as a single track since no
- * internal chapter timestamps are available to split it further.
+ * Real audio — long-form retro/classic mixes hosted on Vercel Blob
+ * storage (see scripts/upload-audio.mjs), since the source files are
+ * too large / copyright-sensitive to commit to the git repo. Each
+ * file is treated as a single track since no internal chapter
+ * timestamps are available to split it further.
  */
+const BLOB_BASE = "https://eocmyhuk5nwcahq8.public.blob.vercel-storage.com";
+
 export const songs: Song[] = [
   {
     id: "golden-era-60s-70s",
     title: "60s–70s Golden Era Mix",
     artist: "softy",
     album: "Golden Era Sessions",
-    audioUrl: "/audio/golden-era-60s-70s.mp3",
+    audioUrl: `${BLOB_BASE}/golden-era-60s-70s.mp3`,
     duration: 691,
     plays: "3.2K",
   },
@@ -20,7 +24,7 @@ export const songs: Song[] = [
     title: "Retro Playlist for Old Vintage Souls",
     artist: "Tuxl",
     album: "Vintage Soul Radio",
-    audioUrl: "/audio/retro-vintage-souls.mp3",
+    audioUrl: `${BLOB_BASE}/retro-vintage-souls.mp3`,
     duration: 1075,
     plays: "5.1K",
   },
@@ -29,7 +33,7 @@ export const songs: Song[] = [
     title: "Dekha Ek Khwab — Weekend Classics",
     artist: "Saregama Music",
     album: "Weekend Classic Collection",
-    audioUrl: "/audio/weekend-classic-dekha-ek-khwab.mp3",
+    audioUrl: `${BLOB_BASE}/weekend-classic-dekha-ek-khwab.mp3`,
     duration: 2944,
     plays: "18K",
   },
