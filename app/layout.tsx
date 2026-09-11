@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Archivo, DM_Sans, Instrument_Serif } from "next/font/google";
+import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -24,6 +25,18 @@ const archivo = Archivo({
 export const metadata: Metadata = {
   title: "Aurelia — Midnight Velvet",
   description: "A nocturnal, cinematic listening room.",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Aurelia",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#17141b",
+  colorScheme: "dark light",
+  width: "device-width",
+  initialScale: 1,
 };
 
 const THEME_INIT_SCRIPT = `
@@ -44,6 +57,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body className="min-h-full flex flex-col bg-[var(--aurelia-bg)] text-[var(--aurelia-ink-2)] font-sans">
         {children}
+        <ServiceWorkerRegister />
       </body>
     </html>
   );

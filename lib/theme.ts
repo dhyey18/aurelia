@@ -51,6 +51,7 @@ export const albumGradients: Record<string, [string, string]> = {
   "Golden Era Sessions": ["oklch(0.58 0.16 70)", "oklch(0.4 0.13 330)"],
   "Vintage Soul Radio": ["oklch(0.6 0.15 45)", "oklch(0.42 0.13 15)"],
   "Weekend Classic Collection": ["oklch(0.5 0.14 290)", "oklch(0.38 0.15 330)"],
+  "Carvaan Weekend Classics": ["oklch(0.62 0.15 25)", "oklch(0.42 0.12 55)"],
 };
 
 export function albumGradientFor(album: string): [string, string] {

@@ -63,7 +63,7 @@ export function AureliaApp() {
             onPlayPlaylist={playPlaylist}
           />
 
-          <main className="relative flex flex-1 min-h-0 flex-col overflow-y-auto thin-scrollbar p-[18px] lg:p-[36px_40px_28px]">
+          <main className="relative flex flex-1 min-h-0 flex-col overflow-y-auto thin-scrollbar pt-[18px] px-[18px] pb-[190px] lg:p-[36px_40px_28px]">
             <div className="flex-1 min-h-0">
               {view === "listen" && (
                 <ListenView
@@ -111,8 +111,10 @@ export function AureliaApp() {
           <NowPlayingRail player={player} />
         </div>
 
-        {!isSheetOpen && <MiniPlayer player={player} onExpand={() => setIsSheetOpen(true)} />}
-        <MobileTabBar view={view} onNavigate={setView} />
+        <div className="fixed inset-x-0 bottom-0 z-40 lg:hidden">
+          {!isSheetOpen && <MiniPlayer player={player} onExpand={() => setIsSheetOpen(true)} />}
+          <MobileTabBar view={view} onNavigate={setView} />
+        </div>
         <NowPlayingSheet isOpen={isSheetOpen} onClose={() => setIsSheetOpen(false)} player={player} />
       </div>
     </LayoutGroup>

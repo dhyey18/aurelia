@@ -20,4 +20,9 @@ export const albums: Record<string, AlbumInfo> = {
     genre: "Bollywood classics jukebox",
     blurb: "Saregama's weekend jukebox, built around Dekha Ek Khwab.",
   },
+  "Carvaan Weekend Classics": {
+    year: 2023,
+    genre: "Carvaan radio show",
+    blurb: "Saregama's Carvaan radio specials — Khans, divas, and decades of retro love songs.",
+  },
 };
