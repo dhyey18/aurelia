@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Song } from "@/types/music";
-import { colors, albumGradientFor } from "@/lib/theme";
+import { colors, withAlpha, albumGradientFor } from "@/lib/theme";
 import { albums } from "@/data/albums";
 import { trackCount } from "@/lib/format";
 import { AlbumArt } from "./AlbumArt";
@@ -26,83 +26,102 @@ export function FeaturedRelease({
 
   return (
     <div
-      className="relative flex items-center gap-6 sm:gap-[34px] overflow-hidden rounded-[20px]"
+      className="aurelia-hardware relative overflow-hidden rounded-[34px]"
       style={{
-        padding: "24px 22px",
-        background: `linear-gradient(115deg, ${from}, ${to})`,
+        padding: "38px 40px 34px",
+        minHeight: 320,
+        background: `linear-gradient(125deg, ${from}, ${to})`,
       }}
     >
       <div
         className="pointer-events-none absolute inset-0 w-1/3 animate-sheen"
+        style={{ background: "linear-gradient(90deg, transparent, oklch(1 0 0 / 0.1), transparent)" }}
+      />
+      <div
+        className="pointer-events-none absolute select-none font-serif"
         style={{
-          background:
-            "linear-gradient(90deg, transparent, oklch(1 0 0 / 0.1), transparent)",
+          fontSize: 220,
+          lineHeight: 1,
+          right: "6%",
+          bottom: "-18%",
+          color: withAlpha(colors.ink, 8),
         }}
-      />
+      >
+        01
+      </div>
 
-      <AlbumArt
-        album={album}
-        radius={15}
-        floaty
-        className="h-[120px] w-[120px] sm:h-[168px] sm:w-[168px] shrink-0"
-      />
-
-      <div className="min-w-0 flex flex-col gap-3 sm:gap-[14px]">
+      <div className="relative flex h-full flex-col justify-between gap-8">
         <div
           className="font-label uppercase"
-          style={{ fontSize: 10.5, letterSpacing: "0.24em", color: colors.amber }}
+          style={{ fontSize: 10.5, letterSpacing: "0.26em", color: colors.amber }}
         >
           Featured release
         </div>
-        <div
-          className="font-serif leading-none"
-          style={{ fontSize: "clamp(30px, 5vw, 52px)", color: colors.ink }}
-        >
-          {album}
-        </div>
-        <div style={{ fontSize: 15, color: colors.ink3 }}>
-          {artist}
-          {info ? ` · ${info.year} · ${trackCount(tracks.length)} · ${info.genre}` : ""}
-        </div>
-        <div className="flex flex-wrap gap-[11px] mt-1">
-          <motion.button
-            type="button"
-            onClick={onPlayAlbum}
-            whileTap={{ scale: 0.96 }}
-            className="flex items-center gap-2 rounded-full font-semibold"
-            style={{
-              padding: "12px 22px",
-              background: colors.ink,
-              color: colors.dark,
-              fontSize: 14,
-            }}
+
+        <div className="flex items-end justify-between gap-6">
+          <div className="min-w-0 flex flex-col gap-4 max-w-[62%]">
+            <h1
+              className="font-serif"
+              style={{ fontSize: "clamp(32px, 4.6vw, 58px)", lineHeight: 0.98, color: colors.ink }}
+            >
+              {album}
+            </h1>
+            <div style={{ fontSize: 15, color: colors.ink3 }}>
+              {artist}
+              {info ? ` · ${info.year} · ${trackCount(tracks.length)} · ${info.genre}` : ""}
+            </div>
+            <div className="flex flex-wrap gap-[11px] mt-1">
+              <motion.button
+                type="button"
+                onClick={onPlayAlbum}
+                whileTap={{ scale: 0.96 }}
+                whileHover={{ scale: 1.02 }}
+                className="flex items-center gap-2 rounded-full font-semibold"
+                style={{ padding: "13px 24px", background: colors.ink, color: colors.dark, fontSize: 14 }}
+              >
+                <span
+                  style={{
+                    width: 0,
+                    height: 0,
+                    borderTop: "6px solid transparent",
+                    borderBottom: "6px solid transparent",
+                    borderLeft: `9px solid ${colors.dark}`,
+                  }}
+                />
+                Play album
+              </motion.button>
+              <motion.button
+                type="button"
+                onClick={onAddToLibrary}
+                whileTap={{ scale: 0.96 }}
+                className="rounded-full"
+                style={{
+                  padding: "13px 24px",
+                  border: `1px solid ${withAlpha(colors.ink, 25)}`,
+                  color: colors.ink,
+                  fontSize: 14,
+                  background: isFavorited ? withAlpha(colors.ink, 12) : "transparent",
+                }}
+              >
+                {isFavorited ? "Saved ♡" : "Save"}
+              </motion.button>
+            </div>
+          </div>
+
+          <motion.div
+            whileHover={{ rotate: 0, scale: 1.02 }}
+            className="shrink-0"
+            style={{ transform: "rotate(-2.5deg)", transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)" }}
           >
-            <span
-              style={{
-                width: 0,
-                height: 0,
-                borderTop: "6px solid transparent",
-                borderBottom: "6px solid transparent",
-                borderLeft: `9px solid ${colors.dark}`,
-              }}
+            <AlbumArt
+              album={album}
+              radius={26}
+              floaty
+              vinylReveal
+              className="group h-[150px] w-[150px] sm:h-[196px] sm:w-[196px]"
+              style={{ boxShadow: `0 28px 50px -18px ${withAlpha(from, 60)}` }}
             />
-            Play album
-          </motion.button>
-          <motion.button
-            type="button"
-            onClick={onAddToLibrary}
-            whileTap={{ scale: 0.96 }}
-            className="rounded-full"
-            style={{
-              padding: "12px 22px",
-              border: `1px solid oklch(0.98 0.01 80 / 0.25)`,
-              color: colors.ink,
-              fontSize: 14,
-              background: isFavorited ? "oklch(0.98 0.01 80 / 0.12)" : "transparent",
-            }}
-          >
-            {isFavorited ? "Added ✓" : "Add to library"}
-          </motion.button>
+          </motion.div>
         </div>
       </div>
     </div>

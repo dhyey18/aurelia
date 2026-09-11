@@ -19,7 +19,7 @@ export function MobileTabBar({
 }) {
   return (
     <nav
-      className="flex justify-around lg:hidden"
+      className="aurelia-hardware flex justify-around lg:hidden"
       style={{
         padding: "8px 10px calc(env(safe-area-inset-bottom, 0px) + 10px)",
         borderTop: `1px solid ${colors.line}`,

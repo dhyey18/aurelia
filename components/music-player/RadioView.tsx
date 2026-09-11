@@ -1,35 +1,115 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Shuffle } from "lucide-react";
-import { colors } from "@/lib/theme";
+import { Play, Pause } from "lucide-react";
+import { colors, withAlpha, albumGradientFor } from "@/lib/theme";
+import { Song } from "@/types/music";
+import { Visualizer } from "./Visualizer";
 
-export function RadioView({ onShuffleAll }: { onShuffleAll: () => void }) {
+export function RadioView({
+  onShuffleAll,
+  currentSong,
+  isPlaying,
+  onTogglePlay,
+}: {
+  onShuffleAll: () => void;
+  currentSong: Song;
+  isPlaying: boolean;
+  onTogglePlay: () => void;
+}) {
+  const [from, to] = albumGradientFor(currentSong.album);
+
   return (
-    <div className="flex flex-1 flex-col items-center justify-center gap-6 text-center">
+    <div className="flex flex-1 flex-col items-center justify-center gap-8 text-center py-8">
       <div
-        className="flex items-center justify-center rounded-full animate-glow-pulse"
-        style={{
-          width: 96,
-          height: 96,
-          background: `radial-gradient(circle, ${colors.amber}33, transparent 70%)`,
-        }}
+        className="font-label uppercase"
+        style={{ fontSize: 10.5, letterSpacing: "0.28em", color: colors.amber }}
       >
-        <Shuffle size={30} color={colors.amber} />
+        Aurelia FM
       </div>
-      <div className="flex flex-col gap-2">
-        <div className="font-serif" style={{ fontSize: 28, color: colors.ink }}>
-          An endless station, tuned to you
+
+      <div className="relative flex items-center justify-center" style={{ width: 260, height: 260 }}>
+        {/* orbital rings */}
+        <div
+          className="absolute inset-0 rounded-full animate-orbit"
+          style={{
+            border: `1px dashed ${withAlpha(colors.ink, 14)}`,
+            animationPlayState: isPlaying ? "running" : "paused",
+          }}
+        />
+        <div
+          className="absolute rounded-full animate-orbit-slow"
+          style={{
+            inset: 18,
+            border: `1px solid ${withAlpha(colors.ink, 8)}`,
+            animationPlayState: isPlaying ? "running" : "paused",
+          }}
+        />
+        <div
+          className={`absolute rounded-full ${isPlaying ? "animate-halo-breathe" : ""}`}
+          style={{
+            inset: 36,
+            background: `radial-gradient(circle, ${withAlpha(from, 30)}, transparent 70%)`,
+            opacity: isPlaying ? undefined : 0.35,
+          }}
+        />
+
+        {/* dial */}
+        <motion.button
+          type="button"
+          onClick={onTogglePlay}
+          whileTap={{ scale: 0.95 }}
+          aria-label={isPlaying ? "Pause radio" : "Play radio"}
+          className="relative flex flex-col items-center justify-center rounded-full"
+          style={{
+            width: 168,
+            height: 168,
+            background: `linear-gradient(140deg, ${from}, ${to})`,
+            boxShadow: `0 24px 50px -20px ${withAlpha(from, 55)}`,
+          }}
+        >
+          <div
+            className="absolute inset-0 rounded-full"
+            style={{ boxShadow: "inset 0 1px 0 oklch(1 0 0 / 0.18)" }}
+          />
+          {isPlaying ? (
+            <Pause size={30} color={colors.dark} fill={colors.dark} strokeWidth={0} />
+          ) : (
+            <Play size={30} color={colors.dark} fill={colors.dark} strokeWidth={0} style={{ marginLeft: 4 }} />
+          )}
+          {isPlaying && (
+            <div
+              className="aurelia-hardware absolute -bottom-2 rounded-full font-label uppercase"
+              style={{
+                fontSize: 9,
+                letterSpacing: "0.14em",
+                padding: "3px 9px",
+                background: colors.dark,
+                color: colors.ink,
+              }}
+            >
+              ● Live
+            </div>
+          )}
+        </motion.button>
+      </div>
+
+      <div className="flex flex-col gap-1.5">
+        <div className="font-serif" style={{ fontSize: 26, color: colors.ink }}>
+          After Hours
         </div>
-        <div style={{ fontSize: 14, color: colors.muted2 }}>
-          Shuffle the whole library into one continuous mix.
+        <div style={{ fontSize: 13.5, color: colors.muted2 }}>
+          {isPlaying ? `${currentSong.title} — ${currentSong.artist}` : "An endless mix, tuned to you"}
         </div>
       </div>
+
+      <Visualizer isPlaying={isPlaying} count={16} height={30} className="w-48" />
+
       <motion.button
         type="button"
         onClick={onShuffleAll}
         whileTap={{ scale: 0.96 }}
-        className="rounded-full font-semibold"
+        className="aurelia-hardware rounded-full font-semibold"
         style={{ padding: "13px 26px", background: colors.ink, color: colors.dark, fontSize: 14 }}
       >
         Shuffle all

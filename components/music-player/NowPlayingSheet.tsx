@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Heart, MoreHorizontal } from "lucide-react";
-import { colors } from "@/lib/theme";
+import { colors, radii } from "@/lib/theme";
 import { AlbumArt } from "./AlbumArt";
 import { MarqueeText } from "./MarqueeText";
 import { Visualizer } from "./Visualizer";
@@ -42,6 +42,7 @@ export function NowPlayingSheet({
 
   if (!currentSong) return null;
   const upNext = queue.slice(currentIndex + 1, currentIndex + 6);
+  const progress = duration > 0 ? currentTime / duration : 0;
 
   return (
     <AnimatePresence>
@@ -53,7 +54,7 @@ export function NowPlayingSheet({
           animate={{ y: 0 }}
           exit={{ y: "100%" }}
           transition={{ type: "spring", stiffness: 300, damping: 32 }}
-          className="fixed inset-0 z-50 flex flex-col lg:hidden overflow-y-auto"
+          className="aurelia-hardware fixed inset-0 z-50 flex flex-col lg:hidden overflow-y-auto"
           style={{ background: colors.bg, padding: "18px 22px 28px" }}
         >
           <div className="flex items-center justify-between shrink-0">
@@ -72,15 +73,21 @@ export function NowPlayingSheet({
           </div>
 
           <div className="flex flex-col gap-5 flex-1 mt-5">
-            <AlbumArt
-              album={currentSong.album}
-              radius={22}
-              spinBadge
-              isPlaying={isPlaying}
-              floaty
-              className="w-full aspect-square"
-              style={{ boxShadow: "0 34px 60px -26px oklch(0 0 0 / 0.8)" }}
-            />
+            <motion.div
+              layoutId="now-playing-art"
+              className="mx-[5%] my-[3%]"
+              transition={{ type: "spring", stiffness: 280, damping: 30 }}
+            >
+              <AlbumArt
+                album={currentSong.album}
+                radius={radii.artwork}
+                halo
+                isPlaying={isPlaying}
+                progress={progress}
+                floaty
+                className="w-full aspect-square"
+              />
+            </motion.div>
 
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0 flex-1">

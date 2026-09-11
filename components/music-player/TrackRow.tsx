@@ -31,7 +31,7 @@ export function TrackRow({
 }) {
   return (
     <div
-      className={`group flex items-center gap-3 rounded-xl transition-colors ${className}`}
+      className={`group aurelia-row-hover flex items-center gap-3 rounded-xl transition-colors ${className}`}
       style={{ padding: "5px 6px" }}
     >
       <button

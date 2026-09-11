@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { Song } from "@/types/music";
-import { colors } from "@/lib/theme";
+import { colors, withAlpha } from "@/lib/theme";
 import { AlbumArt } from "./AlbumArt";
 
 export function SearchBar({
@@ -56,10 +56,10 @@ export function SearchBar({
   return (
     <div ref={wrapperRef} className={`relative ${className}`}>
       <div
-        className="flex items-center gap-[11px] rounded-full"
+        className="flex items-center gap-[11px] rounded-full transition-colors"
         style={{
           padding: "11px 15px",
-          background: "oklch(0.98 0.01 80 / 0.06)",
+          background: focused ? withAlpha(colors.ink, 8) : withAlpha(colors.ink, 5),
           border: `1px solid ${colors.line}`,
         }}
       >
@@ -72,7 +72,7 @@ export function SearchBar({
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setFocused(true)}
           placeholder={placeholder}
-          aria-label="Search music"
+          aria-label="Search Aurelia"
           className="w-full bg-transparent focus:outline-none"
           style={{ fontSize: 13.5, color: colors.ink3 }}
         />
@@ -96,27 +96,36 @@ export function SearchBar({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.98 }}
             transition={{ duration: 0.18 }}
-            className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 overflow-hidden rounded-2xl"
+            className="aurelia-hardware absolute left-0 right-0 top-[calc(100%+8px)] z-50 overflow-hidden rounded-[20px]"
             style={{
               background: colors.rail,
               backdropFilter: "blur(20px)",
               border: `1px solid ${colors.line}`,
-              padding: 8,
+              padding: 10,
             }}
           >
+            <div
+              className="font-label uppercase px-2 pb-2 pt-1"
+              style={{ fontSize: 9.5, letterSpacing: "0.2em", color: colors.muted3 }}
+            >
+              Search Aurelia
+            </div>
             {results.length > 0 ? (
-              results.map((song) => (
-                <button
+              results.map((song, i) => (
+                <motion.button
                   key={song.id}
+                  initial={{ opacity: 0, x: -6 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.22, delay: i * 0.035 }}
                   onClick={() => {
                     onPlay(song.id);
                     setFocused(false);
                     setQuery("");
                   }}
-                  className="flex w-full items-center gap-3 rounded-xl text-left transition-colors"
+                  className="flex w-full items-center gap-3 rounded-xl text-left transition-colors aurelia-row-hover"
                   style={{ padding: "8px" }}
                 >
-                  <AlbumArt album={song.album} radius={8} shadow={false} className="h-9 w-9 shrink-0" />
+                  <AlbumArt album={song.album} radius={9} shadow={false} className="h-9 w-9 shrink-0" />
                   <div className="min-w-0">
                     <p className="truncate" style={{ fontSize: 13.5, color: colors.ink2 }}>
                       {song.title}
@@ -125,7 +134,7 @@ export function SearchBar({
                       {song.artist}
                     </p>
                   </div>
-                </button>
+                </motion.button>
               ))
             ) : (
               <p className="py-4 text-center" style={{ fontSize: 13, color: colors.muted }}>

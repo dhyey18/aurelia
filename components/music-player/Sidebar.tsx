@@ -1,8 +1,9 @@
 "use client";
 
 import { Playlist, Song } from "@/types/music";
-import { colors } from "@/lib/theme";
+import { colors, withAlpha } from "@/lib/theme";
 import { songListMeta } from "@/lib/format";
+import { ThemeToggle } from "./ThemeToggle";
 
 export type ViewKey = "listen" | "browse" | "radio" | "library";
 
@@ -28,8 +29,8 @@ export function Sidebar({
 }) {
   return (
     <aside
-      className="relative hidden lg:flex flex-col gap-[22px] min-h-0"
-      style={{ padding: "26px 22px", borderRight: `1px solid ${colors.line}` }}
+      className="aurelia-hardware relative hidden lg:flex flex-col gap-[22px] min-h-0"
+      style={{ padding: "26px 22px", borderRight: `1px solid ${colors.line}`, background: colors.bg }}
     >
       <div className="flex items-center gap-[11px]">
         <div
@@ -102,11 +103,11 @@ export function Sidebar({
               style={{ padding: "6px 4px" }}
             >
               <div
-                className="shrink-0 rounded-[7px]"
+                className="shrink-0 rounded-[9px]"
                 style={{
                   width: 34,
                   height: 34,
-                  background: `linear-gradient(135deg, ${colors.amber}33, ${colors.orchid}33)`,
+                  background: `linear-gradient(135deg, ${withAlpha(colors.amber, 22)}, ${withAlpha(colors.orchid, 22)})`,
                 }}
               />
               <div className="min-w-0">
@@ -126,16 +127,17 @@ export function Sidebar({
       </div>
 
       <div
-        className="mt-auto rounded-[13px] shrink-0"
+        className="mt-auto flex items-center gap-2.5 rounded-[16px] shrink-0"
         style={{
           padding: 14,
           border: `1px solid ${colors.lineSoft}`,
-          background: "oklch(0.98 0.01 80 / 0.03)",
+          background: withAlpha(colors.ink, 3),
         }}
       >
-        <div style={{ fontSize: 12.5, color: colors.ink3, lineHeight: 1.5 }}>
+        <div style={{ fontSize: 12.5, color: colors.ink3, lineHeight: 1.5, flex: 1 }}>
           Lossless enabled — 24-bit / 96 kHz on this device.
         </div>
+        <ThemeToggle />
       </div>
     </aside>
   );

@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Pause, Repeat, Repeat1, Shuffle } from "lucide-react";
 import { RepeatMode } from "@/types/music";
-import { colors } from "@/lib/theme";
+import { colors, withAlpha } from "@/lib/theme";
 
 function Triangle({ direction, size = 11 }: { direction: "left" | "right"; size?: number }) {
   const side = direction === "left" ? "borderRight" : "borderLeft";
@@ -81,7 +81,7 @@ export function TransportControls({
           width: heroSize,
           height: heroSize,
           background: colors.ink,
-          boxShadow: `0 12px 30px -10px ${colors.amber}cc`,
+          boxShadow: `0 12px 30px -10px ${withAlpha(colors.amber, 80)}`,
         }}
       >
         {isPlaying ? (

@@ -26,13 +26,23 @@ export const metadata: Metadata = {
   description: "A nocturnal, cinematic listening room.",
 };
 
+const THEME_INIT_SCRIPT = `
+  try {
+    var t = localStorage.getItem("aurelia-theme");
+    if (t === "warm") document.documentElement.setAttribute("data-aurelia-theme", "warm");
+  } catch (e) {}
+`;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
       className={`${dmSans.variable} ${instrumentSerif.variable} ${archivo.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[oklch(0.15_0.014_65)] text-[oklch(0.9_0.01_80)] font-sans">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
+      <body className="min-h-full flex flex-col bg-[var(--aurelia-bg)] text-[var(--aurelia-ink-2)] font-sans">
         {children}
       </body>
     </html>

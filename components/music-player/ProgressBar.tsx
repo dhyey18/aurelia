@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { colors } from "@/lib/theme";
+import { colors, withAlpha } from "@/lib/theme";
 import { formatTime } from "@/lib/format";
 
 export function ProgressBar({
@@ -71,7 +71,7 @@ export function ProgressBar({
       >
         <div
           className="relative w-full rounded-full"
-          style={{ height: 4, background: "oklch(0.98 0.01 80 / 0.14)" }}
+          style={{ height: 4, background: withAlpha(colors.ink, 14) }}
         >
           <div
             className="absolute inset-y-0 left-0 rounded-full"

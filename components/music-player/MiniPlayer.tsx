@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Pause } from "lucide-react";
 import { colors } from "@/lib/theme";
 import { AlbumArt } from "./AlbumArt";
@@ -28,21 +29,22 @@ export function MiniPlayer({
         }
       }}
       aria-label={`Now playing: ${currentSong.title} — expand player`}
-      className="flex lg:hidden items-center gap-3 rounded-2xl text-left mx-3.5 mb-2 cursor-pointer"
+      className="aurelia-hardware flex lg:hidden items-center gap-3 rounded-2xl text-left mx-3.5 mb-2 cursor-pointer"
       style={{
         padding: "10px 12px",
         background: colors.bgMini,
         backdropFilter: "blur(14px)",
       }}
     >
-      <AlbumArt
-        album={currentSong.album}
-        radius={8}
-        shadow={false}
-        isPlaying={isPlaying}
-        className="shrink-0"
-        style={{ width: 40, height: 40 }}
-      />
+      <motion.div layoutId="now-playing-art" className="shrink-0" style={{ width: 40, height: 40 }}>
+        <AlbumArt
+          album={currentSong.album}
+          radius={10}
+          shadow={false}
+          isPlaying={isPlaying}
+          className="w-full h-full"
+        />
+      </motion.div>
       <div className="min-w-0 flex-1">
         <div className="truncate" style={{ fontSize: 14, color: colors.ink }}>
           {currentSong.title}

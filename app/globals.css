@@ -1,8 +1,68 @@
 @import "tailwindcss";
 
 :root {
-  --background: oklch(0.15 0.014 65);
-  --foreground: oklch(0.92 0.01 80);
+  /* ---------- canvas tokens (theme-reactive) ---------- */
+  --aurelia-bg: oklch(0.15 0.014 65);
+  --aurelia-bg-elevated: oklch(0.19 0.014 65);
+  --aurelia-surface: oklch(0.19 0.016 65);
+  --aurelia-ink: oklch(0.98 0.01 80);
+  --aurelia-ink-2: oklch(0.92 0.01 80);
+  --aurelia-ink-3: oklch(0.8 0.012 78);
+  --aurelia-muted: oklch(0.68 0.014 78);
+  --aurelia-muted-2: oklch(0.62 0.012 78);
+  --aurelia-muted-3: oklch(0.55 0.012 78);
+  --aurelia-faint: oklch(0.5 0.011 78);
+  --aurelia-border: oklch(0.98 0.01 80 / 0.07);
+  --aurelia-border-soft: oklch(0.98 0.01 80 / 0.08);
+  --aurelia-rail: oklch(0.18 0.016 65 / 0.78);
+  --aurelia-mini: oklch(0.24 0.02 65 / 0.92);
+  --aurelia-dark: oklch(0.17 0.014 65);
+
+  /* ---------- accents (mode-independent, follow the music not the theme) ---------- */
+  --aurelia-amber: oklch(0.78 0.14 70);
+  --aurelia-orchid: oklch(0.72 0.16 335);
+  --aurelia-accent: oklch(0.68 0.17 40);
+  --aurelia-rose: oklch(0.62 0.11 20);
+
+  --background: var(--aurelia-bg);
+  --foreground: var(--aurelia-ink-2);
+}
+
+/* Warm mode: the "room" lightens to ivory/parchment; the accents and the
+   hardware (sidebar / rail / mini-player / sheet) stay exactly as they are —
+   only the canvas the content sits on changes. */
+:root[data-aurelia-theme="warm"] {
+  --aurelia-bg: oklch(0.96 0.014 75);
+  --aurelia-bg-elevated: oklch(0.92 0.018 65);
+  --aurelia-surface: oklch(0.985 0.008 78);
+  --aurelia-ink: oklch(0.28 0.03 45);
+  --aurelia-ink-2: oklch(0.34 0.028 45);
+  --aurelia-ink-3: oklch(0.46 0.024 48);
+  --aurelia-muted: oklch(0.52 0.02 50);
+  --aurelia-muted-2: oklch(0.58 0.018 50);
+  --aurelia-muted-3: oklch(0.64 0.016 50);
+  --aurelia-faint: oklch(0.68 0.014 50);
+  --aurelia-border: oklch(0.3 0.03 50 / 0.12);
+  --aurelia-border-soft: oklch(0.3 0.03 50 / 0.17);
+}
+
+/* The instrument panel: sidebar, now-playing rail, mini player, mobile
+   sheet. Always dark espresso, in both themes — re-pin the same variable
+   names so every shared component (TrackRow, AlbumArt, ProgressBar…)
+   resolves correctly with zero surface-awareness of its own. */
+.aurelia-hardware {
+  --aurelia-bg: oklch(0.15 0.014 65);
+  --aurelia-bg-elevated: oklch(0.19 0.014 65);
+  --aurelia-surface: oklch(0.19 0.016 65);
+  --aurelia-ink: oklch(0.98 0.01 80);
+  --aurelia-ink-2: oklch(0.92 0.01 80);
+  --aurelia-ink-3: oklch(0.8 0.012 78);
+  --aurelia-muted: oklch(0.68 0.014 78);
+  --aurelia-muted-2: oklch(0.62 0.012 78);
+  --aurelia-muted-3: oklch(0.55 0.012 78);
+  --aurelia-faint: oklch(0.5 0.011 78);
+  --aurelia-border: oklch(0.98 0.01 80 / 0.07);
+  --aurelia-border-soft: oklch(0.98 0.01 80 / 0.08);
 }
 
 @theme inline {
@@ -22,9 +82,10 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--aurelia-bg);
+  color: var(--aurelia-ink-2);
   overscroll-behavior-y: none;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 /* ---------- scrollbars ---------- */
@@ -43,7 +104,7 @@ body {
   background: transparent;
 }
 .thin-scrollbar::-webkit-scrollbar-thumb {
-  background: oklch(0.98 0.01 80 / 0.12);
+  background: var(--aurelia-border-soft);
   border-radius: 999px;
 }
 
@@ -74,7 +135,27 @@ body {
   animation: floatY 7s ease-in-out infinite;
 }
 
-/* ---------- record-badge spin ---------- */
+/* ---------- halo / orbital ring ---------- */
+@keyframes orbitSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-orbit {
+  animation: orbitSpin 22s linear infinite;
+}
+.animate-orbit-slow {
+  animation: orbitSpin 40s linear infinite reverse;
+}
+
+@keyframes haloBreathe {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.035); }
+}
+.animate-halo-breathe {
+  animation: haloBreathe 4s ease-in-out infinite;
+}
+
+/* ---------- record-badge spin (legacy, small corner badge) ---------- */
 @keyframes spinSlow {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -107,6 +188,9 @@ body {
   .animate-sheen,
   .animate-float-y,
   .animate-spin-slow,
+  .animate-orbit,
+  .animate-orbit-slow,
+  .animate-halo-breathe,
   .eq-bar,
   .animate-marquee {
     animation: none !important;
@@ -158,7 +242,16 @@ input[type="range"].player-range::-moz-range-track {
   animation: fadeInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-@keyframes sheetUp {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
+/* ---------- theme-aware row hover (works in both Warm and Midnight) ---------- */
+.aurelia-row-hover:hover {
+  background: color-mix(in oklch, var(--aurelia-ink) 5%, transparent);
+}
+
+/* ---------- vinyl reveal on artwork hover ---------- */
+.vinyl-reveal {
+  transform: translateX(0);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.group:hover .vinyl-reveal {
+  transform: translateX(14%);
 }

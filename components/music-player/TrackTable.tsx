@@ -51,13 +51,13 @@ export function TrackTable({
         return (
           <div
             key={song.id}
-            className="group md:grid flex items-center gap-3 rounded-[11px] cursor-pointer transition-colors hover:bg-white/[0.04]"
+            className="group aurelia-row-hover md:grid flex items-center gap-3 rounded-[14px] cursor-pointer transition-colors"
             style={{ gridTemplateColumns: GRID, gap: 16, padding: "9px 12px" }}
             onClick={() => onPlay(song.id)}
           >
             <span
-              className="hidden md:inline tabular-nums"
-              style={{ fontSize: 13, color: colors.muted3 }}
+              className="hidden md:inline font-serif tabular-nums"
+              style={{ fontSize: 21, color: active ? colors.amber : colors.faint }}
             >
               {i + 1}
             </span>

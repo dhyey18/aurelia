@@ -2,7 +2,7 @@
 
 import { Reorder } from "framer-motion";
 import { Heart, Volume1, Volume2, VolumeX } from "lucide-react";
-import { colors } from "@/lib/theme";
+import { colors, radii } from "@/lib/theme";
 import { AlbumArt } from "./AlbumArt";
 import { MarqueeText } from "./MarqueeText";
 import { Visualizer } from "./Visualizer";
@@ -42,9 +42,11 @@ export function NowPlayingRail({ player }: { player: UseAudioPlayerReturn }) {
   const upNext = queue.slice(currentIndex + 1, currentIndex + 7);
   const VolIcon = isMuted || volume === 0 ? VolumeX : volume < 0.6 ? Volume1 : Volume2;
 
+  const progress = duration > 0 ? currentTime / duration : 0;
+
   return (
     <aside
-      className="relative hidden lg:flex flex-col gap-[15px] min-h-0"
+      className="aurelia-hardware relative hidden lg:flex flex-col gap-[15px] min-h-0"
       style={{
         padding: 26,
         background: colors.rail,
@@ -72,14 +74,16 @@ export function NowPlayingRail({ player }: { player: UseAudioPlayerReturn }) {
         </div>
       </div>
 
-      <AlbumArt
-        album={currentSong.album}
-        radius={18}
-        spinBadge
-        isPlaying={isPlaying}
-        className="w-full aspect-square"
-        style={{ boxShadow: "0 30px 60px -24px oklch(0 0 0 / 0.8)" }}
-      />
+      <div className="mx-[5%] my-[3%]">
+        <AlbumArt
+          album={currentSong.album}
+          radius={radii.artwork}
+          halo
+          isPlaying={isPlaying}
+          progress={progress}
+          className="w-full aspect-square"
+        />
+      </div>
 
       <div className="flex flex-col gap-[5px]">
         <MarqueeText

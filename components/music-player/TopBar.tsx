@@ -1,8 +1,9 @@
 "use client";
 
 import { Song } from "@/types/music";
-import { colors } from "@/lib/theme";
+import { colors, withAlpha } from "@/lib/theme";
 import { SearchBar } from "./SearchBar";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function TopBar({ songs, onPlay }: { songs: Song[]; onPlay: (id: string) => void }) {
   return (
@@ -18,19 +19,20 @@ export function TopBar({ songs, onPlay }: { songs: Song[]; onPlay: (id: string) 
               letterSpacing: "0.14em",
               color: colors.muted2,
               padding: "7px 13px",
-              background: "oklch(0.98 0.01 80 / 0.07)",
+              background: colors.lineSoft,
             }}
           >
             {label}
           </span>
         ))}
       </div>
+      <ThemeToggle className="hidden sm:flex" />
       <div
         className="shrink-0 rounded-full"
         style={{
           width: 32,
           height: 32,
-          background: `repeating-linear-gradient(120deg, ${colors.orchid}80 0px, ${colors.orchid}80 4px, ${colors.amber}66 4px, ${colors.amber}66 8px)`,
+          background: `repeating-linear-gradient(120deg, ${withAlpha(colors.orchid, 50)} 0px, ${withAlpha(colors.orchid, 50)} 4px, ${withAlpha(colors.amber, 40)} 4px, ${withAlpha(colors.amber, 40)} 8px)`,
         }}
         aria-hidden="true"
       />
