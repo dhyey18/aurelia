@@ -95,7 +95,7 @@ export function RadioView({
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <div className="font-serif" style={{ fontSize: 26, color: colors.ink }}>
+        <div className="font-sans font-extrabold tracking-tight" style={{ fontSize: 26, color: colors.ink }}>
           After Hours
         </div>
         <div style={{ fontSize: 13.5, color: colors.muted2 }}>

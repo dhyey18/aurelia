@@ -34,6 +34,7 @@ export function ListenView({
 }) {
   const featuredTracks = songs.filter((s) => s.album === featuredAlbum);
   const onRepeat = topPlayed(songs, 5);
+  const isFeaturedPlaying = isPlaying && featuredTracks.some((t) => t.id === currentId);
 
   return (
     <div className="flex flex-col gap-7 min-h-0">
@@ -47,7 +48,7 @@ export function ListenView({
             >
               Good evening
             </div>
-            <div className="font-serif mt-1" style={{ fontSize: 34, lineHeight: 1.05, color: colors.ink }}>
+            <div className="font-sans font-extrabold tracking-tight mt-1" style={{ fontSize: 34, lineHeight: 1.05, color: colors.ink }}>
               Your evening starts here.
             </div>
           </div>
@@ -57,6 +58,7 @@ export function ListenView({
           album={featuredAlbum}
           tracks={featuredTracks}
           isFavorited={featuredTracks.every((t) => favorites.has(t.id))}
+          isPlaying={isFeaturedPlaying}
           onPlayAlbum={() => onPlayAlbum(featuredTracks.map((t) => t.id))}
           onAddToLibrary={() => featuredTracks.forEach((t) => onToggleFavorite(t.id))}
         />
@@ -72,7 +74,7 @@ export function ListenView({
             >
               Good evening
             </div>
-            <div className="font-serif mt-0.5" style={{ fontSize: 27, color: colors.ink }}>
+            <div className="font-sans font-extrabold tracking-tight mt-0.5" style={{ fontSize: 22, lineHeight: 1.15, color: colors.ink }}>
               Your evening starts here.
             </div>
           </div>
@@ -99,7 +101,14 @@ export function ListenView({
             className="pointer-events-none absolute inset-0 w-1/3 animate-sheen"
             style={{ background: "linear-gradient(90deg, transparent, oklch(1 0 0 / 0.1), transparent)" }}
           />
-          <AlbumArt album={featuredAlbum} radius={16} className="shrink-0" style={{ width: 84, height: 84 }} />
+          <AlbumArt
+            album={featuredAlbum}
+            radius={16}
+            shape="sleeve"
+            isPlaying={isFeaturedPlaying}
+            className="shrink-0"
+            style={{ width: 84, height: 84 }}
+          />
           <div className="min-w-0">
             <div
               className="font-label uppercase"
@@ -107,7 +116,7 @@ export function ListenView({
             >
               Featured
             </div>
-            <div className="font-serif mt-1" style={{ fontSize: 28, lineHeight: 1.05, color: colors.ink }}>
+            <div className="font-sans font-extrabold tracking-tight mt-1" style={{ fontSize: 28, lineHeight: 1.05, color: colors.ink }}>
               {featuredAlbum}
             </div>
             <div style={{ fontSize: 13, color: colors.ink3 }}>
@@ -120,7 +129,7 @@ export function ListenView({
       {/* ---- On repeat ---- */}
       <div className="flex flex-col gap-2 min-h-0">
         <div className="flex items-baseline justify-between">
-          <div className="font-serif" style={{ fontSize: 22 }}>
+          <div className="font-sans font-extrabold tracking-tight" style={{ fontSize: 22 }}>
             <span className="hidden lg:inline" style={{ fontSize: 25, color: colors.ink2 }}>
               On repeat this week
             </span>

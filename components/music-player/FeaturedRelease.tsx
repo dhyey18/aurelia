@@ -11,12 +11,14 @@ export function FeaturedRelease({
   album,
   tracks,
   isFavorited,
+  isPlaying,
   onPlayAlbum,
   onAddToLibrary,
 }: {
   album: string;
   tracks: Song[];
   isFavorited: boolean;
+  isPlaying: boolean;
   onPlayAlbum: () => void;
   onAddToLibrary: () => void;
 }) {
@@ -38,7 +40,7 @@ export function FeaturedRelease({
         style={{ background: "linear-gradient(90deg, transparent, oklch(1 0 0 / 0.1), transparent)" }}
       />
       <div
-        className="pointer-events-none absolute select-none font-serif"
+        className="pointer-events-none absolute select-none font-sans font-extrabold tracking-tight"
         style={{
           fontSize: 220,
           lineHeight: 1,
@@ -61,7 +63,7 @@ export function FeaturedRelease({
         <div className="flex items-end justify-between gap-6">
           <div className="min-w-0 flex flex-col gap-4 max-w-[62%]">
             <h1
-              className="font-serif"
+              className="font-sans font-extrabold tracking-tight"
               style={{ fontSize: "clamp(32px, 4.6vw, 58px)", lineHeight: 0.98, color: colors.ink }}
             >
               {album}
@@ -116,9 +118,10 @@ export function FeaturedRelease({
             <AlbumArt
               album={album}
               radius={26}
+              shape="sleeve"
               floaty
-              vinylReveal
-              className="group h-[150px] w-[150px] sm:h-[196px] sm:w-[196px]"
+              isPlaying={isPlaying}
+              className="h-[150px] w-[150px] sm:h-[196px] sm:w-[196px]"
               style={{ boxShadow: `0 28px 50px -18px ${withAlpha(from, 60)}` }}
             />
           </motion.div>

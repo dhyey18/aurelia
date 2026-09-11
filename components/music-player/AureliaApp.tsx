@@ -77,7 +77,12 @@ export function AureliaApp() {
                 />
               )}
               {view === "browse" && (
-                <BrowseView songs={songData} onPlayAlbum={(ids) => playSong(ids[0], ids)} />
+                <BrowseView
+                  songs={songData}
+                  currentId={currentId}
+                  isPlaying={isPlaying}
+                  onPlayAlbum={(ids) => playSong(ids[0], ids)}
+                />
               )}
               {view === "radio" && (
                 <RadioView

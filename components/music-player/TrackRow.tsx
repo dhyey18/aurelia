@@ -41,7 +41,6 @@ export function TrackRow({
       >
         <AlbumArt
           album={song.album}
-          radius={Math.round(thumbSize * 0.2)}
           shadow={false}
           isPlaying={isPlaying && active}
           className="shrink-0"

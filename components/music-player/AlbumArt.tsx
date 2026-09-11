@@ -6,42 +6,136 @@ import { albumGradientFor, colors, withAlpha } from "@/lib/theme";
 const RING_R = 47;
 const RING_C = 2 * Math.PI * RING_R;
 
+function VinylDisc({
+  from,
+  to,
+  isPlaying,
+  className = "",
+  style,
+}: {
+  from: string;
+  to: string;
+  isPlaying: boolean;
+  className?: string;
+  style?: CSSProperties;
+}) {
+  return (
+    <div
+      className={`relative rounded-full ${className}`}
+      style={{
+        background:
+          "radial-gradient(circle at 32% 28%, oklch(0.32 0.006 60), oklch(0.07 0.004 60) 78%)",
+        boxShadow: "inset 0 0 0 1px oklch(1 0 0 / 0.08), 0 10px 22px -12px oklch(0 0 0 / 0.6)",
+        ...style,
+      }}
+    >
+      <div
+        className="absolute inset-[6%] rounded-full animate-spin-slow"
+        style={{
+          backgroundImage:
+            "repeating-radial-gradient(circle, oklch(1 0 0 / 0.05) 0px, oklch(1 0 0 / 0.05) 1px, transparent 1px, transparent 4.5%)",
+          animationPlayState: isPlaying ? "running" : "paused",
+        }}
+      >
+        <div
+          className="absolute rounded-full"
+          style={{
+            inset: "31%",
+            background: `conic-gradient(from 0deg, ${from}, ${to}, ${from})`,
+            boxShadow: "inset 0 0 0 1px oklch(0 0 0 / 0.35)",
+          }}
+        />
+        <div
+          className="absolute rounded-full"
+          style={{
+            inset: "47%",
+            background: "oklch(0.1 0.004 60)",
+            boxShadow: "inset 0 1px 1px oklch(1 0 0 / 0.15)",
+          }}
+        />
+      </div>
+      <div
+        className="absolute inset-0 rounded-full"
+        style={{ background: "radial-gradient(circle at 30% 22%, oklch(1 0 0 / 0.14), transparent 50%)" }}
+      />
+    </div>
+  );
+}
+
 export function AlbumArt({
   album,
   radius = 20,
   shadow = true,
-  spinBadge = false,
+  shape = "disc",
   isPlaying = false,
   floaty = false,
   halo = false,
   progress = 0,
-  vinylReveal = false,
   className = "",
   style,
 }: {
   album: string;
   radius?: number;
   shadow?: boolean;
-  spinBadge?: boolean;
+  /** "disc" — a plain vinyl record (lists, grids, badges). "sleeve" — a square
+   * album sleeve with a spinning vinyl permanently peeking out behind it. */
+  shape?: "disc" | "sleeve";
   isPlaying?: boolean;
   floaty?: boolean;
   /** Show the "Aurelia Halo" — a progress ring + soft glow around the art. */
   halo?: boolean;
   /** 0–1 playback position, drives the halo ring. */
   progress?: number;
-  /** Reveal a vinyl disc sliding out from behind the art on hover (wrap in a `.group`). */
-  vinylReveal?: boolean;
   className?: string;
   style?: CSSProperties;
 }) {
   const [from, to] = albumGradientFor(album);
   const dash = Math.min(1, Math.max(0, progress)) * RING_C;
 
+  if (shape === "disc") {
+    return (
+      <div className={`relative ${floaty ? "animate-float-y" : ""} ${className}`} style={style}>
+        {halo && (
+          <div
+            className={`pointer-events-none absolute -inset-[10%] rounded-full ${
+              isPlaying ? "animate-halo-breathe" : ""
+            }`}
+            style={{
+              background: `radial-gradient(circle, ${withAlpha(from, 32)}, transparent 68%)`,
+              opacity: isPlaying ? undefined : 0.35,
+              transition: "opacity 0.6s ease",
+            }}
+          />
+        )}
+        <VinylDisc
+          from={from}
+          to={to}
+          isPlaying={isPlaying}
+          className="h-full w-full"
+          style={{ boxShadow: shadow ? "0 10px 22px -10px oklch(0 0 0 / 0.55)" : undefined }}
+        />
+        {halo && (
+          <svg viewBox="0 0 100 100" className="pointer-events-none absolute -inset-[4%]" style={{ transform: "rotate(-90deg)" }}>
+            <circle cx="50" cy="50" r={RING_R} fill="none" stroke={withAlpha(colors.ink, 10)} strokeWidth="1.4" />
+            <circle
+              cx="50"
+              cy="50"
+              r={RING_R}
+              fill="none"
+              stroke={from}
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeDasharray={`${dash} ${RING_C}`}
+              style={{ transition: "stroke-dasharray 0.2s linear" }}
+            />
+          </svg>
+        )}
+      </div>
+    );
+  }
+
   return (
-    <div
-      className={`relative ${floaty ? "animate-float-y" : ""} ${className}`}
-      style={style}
-    >
+    <div className={`relative ${floaty ? "animate-float-y" : ""} ${className}`} style={style}>
       {halo && (
         <div
           className={`pointer-events-none absolute -inset-[10%] rounded-full ${
@@ -55,25 +149,13 @@ export function AlbumArt({
         />
       )}
 
-      {vinylReveal && (
-        <div
-          className="vinyl-reveal pointer-events-none absolute inset-0 -z-10 rounded-full"
-          style={{
-            background: `radial-gradient(circle at 35% 35%, oklch(0.3 0.01 60), oklch(0.08 0.005 60) 70%)`,
-            boxShadow: "inset 0 0 0 10px oklch(0.05 0 0 / 0.4)",
-          }}
-        >
-          <div
-            className="absolute left-1/2 top-1/2 rounded-full"
-            style={{
-              width: "18%",
-              height: "18%",
-              transform: "translate(-50%, -50%)",
-              background: from,
-            }}
-          />
-        </div>
-      )}
+      <VinylDisc
+        from={from}
+        to={to}
+        isPlaying={isPlaying}
+        className="absolute inset-0 -z-10"
+        style={{ transform: "translateX(18%)" }}
+      />
 
       <div
         className="relative overflow-hidden"
@@ -98,45 +180,12 @@ export function AlbumArt({
             background: "radial-gradient(circle at 30% 20%, oklch(1 0 0 / 0.16), transparent 55%)",
           }}
         />
-        <div
-          className="absolute inset-0"
-          style={{ boxShadow: "inset 0 1px 0 oklch(1 0 0 / 0.14)" }}
-        />
-
-        {spinBadge && (
-          <div
-            className="absolute right-[8%] top-[8%] flex items-center justify-center rounded-full animate-spin-slow"
-            style={{
-              width: "13%",
-              height: "13%",
-              minWidth: 24,
-              minHeight: 24,
-              background: `conic-gradient(oklch(0.98 0.01 80 / 0.4), ${colors.dark} 70%, oklch(0.98 0.01 80 / 0.4))`,
-              animationPlayState: isPlaying ? "running" : "paused",
-            }}
-          >
-            <div
-              className="rounded-full"
-              style={{ width: "30%", height: "30%", background: colors.dark }}
-            />
-          </div>
-        )}
+        <div className="absolute inset-0" style={{ boxShadow: "inset 0 1px 0 oklch(1 0 0 / 0.14)" }} />
       </div>
 
       {halo && (
-        <svg
-          viewBox="0 0 100 100"
-          className="pointer-events-none absolute -inset-[4%]"
-          style={{ transform: "rotate(-90deg)" }}
-        >
-          <circle
-            cx="50"
-            cy="50"
-            r={RING_R}
-            fill="none"
-            stroke={withAlpha(colors.ink, 10)}
-            strokeWidth="1.4"
-          />
+        <svg viewBox="0 0 100 100" className="pointer-events-none absolute -inset-[4%]" style={{ transform: "rotate(-90deg)" }}>
+          <circle cx="50" cy="50" r={RING_R} fill="none" stroke={withAlpha(colors.ink, 10)} strokeWidth="1.4" />
           <circle
             cx="50"
             cy="50"

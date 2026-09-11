@@ -125,7 +125,7 @@ export function SearchBar({
                   className="flex w-full items-center gap-3 rounded-xl text-left transition-colors aurelia-row-hover"
                   style={{ padding: "8px" }}
                 >
-                  <AlbumArt album={song.album} radius={9} shadow={false} className="h-9 w-9 shrink-0" />
+                  <AlbumArt album={song.album} shadow={false} className="h-9 w-9 shrink-0" />
                   <div className="min-w-0">
                     <p className="truncate" style={{ fontSize: 13.5, color: colors.ink2 }}>
                       {song.title}

@@ -2,17 +2,24 @@
 
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import { Disc3, Headphones, LayoutGrid, Mic2, Radio as RadioIcon } from "lucide-react";
 import { Song } from "@/types/music";
 import { colors, withAlpha } from "@/lib/theme";
 import { groupByAlbum } from "@/lib/catalog";
 import { trackCount } from "@/lib/format";
 import { AlbumArt } from "./AlbumArt";
 
+const CATEGORY_ICONS = [LayoutGrid, Disc3, Headphones, RadioIcon, Mic2];
+
 export function BrowseView({
   songs,
+  currentId,
+  isPlaying,
   onPlayAlbum,
 }: {
   songs: Song[];
+  currentId: string;
+  isPlaying: boolean;
   onPlayAlbum: (trackIds: string[]) => void;
 }) {
   const albums = groupByAlbum(songs);
@@ -22,28 +29,42 @@ export function BrowseView({
 
   return (
     <div className="flex flex-col gap-5 min-h-0">
-      <div className="font-serif" style={{ fontSize: 25, color: colors.ink2 }}>
+      <div className="font-sans font-extrabold tracking-tight" style={{ fontSize: 25, color: colors.ink2 }}>
         Browse the collection
       </div>
 
-      <div className="flex flex-wrap gap-2">
-        {genres.map((genre) => {
+      <div className="flex flex-wrap gap-x-6 gap-y-3">
+        {genres.map((genre, i) => {
           const active = genre === filter;
+          const Icon = CATEGORY_ICONS[i % CATEGORY_ICONS.length];
           return (
             <button
               key={genre}
               type="button"
               onClick={() => setFilter(genre)}
-              className={`font-label uppercase rounded-full transition-colors ${active ? "aurelia-hardware" : ""}`}
-              style={{
-                fontSize: 10.5,
-                letterSpacing: "0.12em",
-                padding: "8px 15px",
-                background: active ? colors.ink : colors.lineSoft,
-                color: active ? colors.dark : colors.muted2,
-              }}
+              className="flex flex-col items-center gap-2"
+              style={{ width: 78 }}
             >
-              {genre}
+              <span
+                className={`flex h-14 w-14 items-center justify-center rounded-full transition-transform ${
+                  active ? "aurelia-hardware scale-105" : ""
+                }`}
+                style={{
+                  background: active ? colors.ink : colors.surface,
+                  border: `1px solid ${active ? "transparent" : colors.line}`,
+                  boxShadow: active
+                    ? `0 10px 20px -10px ${withAlpha(colors.dark, 50)}`
+                    : `0 6px 16px -12px ${withAlpha(colors.dark, 30)}`,
+                }}
+              >
+                <Icon size={20} color={active ? colors.dark : colors.muted2} strokeWidth={1.75} />
+              </span>
+              <span
+                className="truncate w-full text-center"
+                style={{ fontSize: 11, color: active ? colors.ink2 : colors.muted2 }}
+              >
+                {genre}
+              </span>
             </button>
           );
         })}
@@ -70,7 +91,7 @@ export function BrowseView({
             }}
           >
             <div
-              className="pointer-events-none absolute select-none font-serif"
+              className="pointer-events-none absolute select-none font-sans font-extrabold tracking-tight"
               style={{
                 fontSize: 74,
                 lineHeight: 1,
@@ -82,14 +103,15 @@ export function BrowseView({
             >
               {String(i + 1).padStart(2, "0")}
             </div>
-            <AlbumArt
-              album={album.name}
-              radius={18}
-              vinylReveal
-              className="relative z-[1] w-full aspect-square"
-            />
+            <div className="relative z-[1] flex w-full aspect-square items-center justify-center">
+              <AlbumArt
+                album={album.name}
+                isPlaying={isPlaying && album.tracks.some((t) => t.id === currentId)}
+                className="w-[74%] aspect-square"
+              />
+            </div>
             <div className="relative z-[1] min-w-0 px-0.5 pb-1">
-              <div className="font-serif truncate" style={{ fontSize: 18, color: colors.ink }}>
+              <div className="font-sans font-extrabold tracking-tight truncate" style={{ fontSize: 18, color: colors.ink }}>
                 {album.name}
               </div>
               <div className="truncate" style={{ fontSize: 12.5, color: colors.muted2 }}>

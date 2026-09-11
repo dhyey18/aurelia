@@ -78,6 +78,7 @@ export function NowPlayingRail({ player }: { player: UseAudioPlayerReturn }) {
         <AlbumArt
           album={currentSong.album}
           radius={radii.artwork}
+          shape="sleeve"
           halo
           isPlaying={isPlaying}
           progress={progress}
@@ -88,7 +89,7 @@ export function NowPlayingRail({ player }: { player: UseAudioPlayerReturn }) {
       <div className="flex flex-col gap-[5px]">
         <MarqueeText
           text={currentSong.title}
-          className="font-serif"
+          className="font-sans font-extrabold tracking-tight"
           style={{ fontSize: 32, lineHeight: 1.1, color: colors.ink }}
         />
         <div style={{ fontSize: 14, color: colors.ink3 }}>{currentSong.artist}</div>

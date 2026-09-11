@@ -56,7 +56,7 @@ export function TrackTable({
             onClick={() => onPlay(song.id)}
           >
             <span
-              className="hidden md:inline font-serif tabular-nums"
+              className="hidden md:inline font-sans font-extrabold tracking-tight tabular-nums"
               style={{ fontSize: 21, color: active ? colors.amber : colors.faint }}
             >
               {i + 1}
@@ -64,7 +64,6 @@ export function TrackTable({
             <div className="flex items-center gap-3 min-w-0 flex-1">
               <AlbumArt
                 album={song.album}
-                radius={7}
                 shadow={false}
                 isPlaying={isPlaying && active}
                 style={{ width: 38, height: 38 }}

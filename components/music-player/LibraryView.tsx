@@ -23,7 +23,7 @@ export function LibraryView({
 }) {
   return (
     <div className="flex flex-col gap-8 min-h-0 overflow-y-auto thin-scrollbar pr-1">
-      <div className="font-serif" style={{ fontSize: 25, color: colors.ink2 }}>
+      <div className="font-sans font-extrabold tracking-tight" style={{ fontSize: 25, color: colors.ink2 }}>
         Your library
       </div>
 

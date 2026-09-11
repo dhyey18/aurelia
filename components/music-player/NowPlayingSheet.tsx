@@ -81,6 +81,7 @@ export function NowPlayingSheet({
               <AlbumArt
                 album={currentSong.album}
                 radius={radii.artwork}
+                shape="sleeve"
                 halo
                 isPlaying={isPlaying}
                 progress={progress}
@@ -93,7 +94,7 @@ export function NowPlayingSheet({
               <div className="min-w-0 flex-1">
                 <MarqueeText
                   text={currentSong.title}
-                  className="font-serif"
+                  className="font-sans font-extrabold tracking-tight"
                   style={{ fontSize: 30, lineHeight: 1.1, color: colors.ink }}
                 />
                 <div style={{ fontSize: 14.5, color: colors.ink3 }}>{currentSong.artist}</div>

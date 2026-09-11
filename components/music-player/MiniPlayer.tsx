@@ -39,7 +39,6 @@ export function MiniPlayer({
       <motion.div layoutId="now-playing-art" className="shrink-0" style={{ width: 40, height: 40 }}>
         <AlbumArt
           album={currentSong.album}
-          radius={10}
           shadow={false}
           isPlaying={isPlaying}
           className="w-full h-full"

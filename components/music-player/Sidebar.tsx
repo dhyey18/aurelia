@@ -3,6 +3,7 @@
 import { Playlist, Song } from "@/types/music";
 import { colors, withAlpha } from "@/lib/theme";
 import { songListMeta } from "@/lib/format";
+import { AlbumArt } from "./AlbumArt";
 import { ThemeToggle } from "./ThemeToggle";
 
 export type ViewKey = "listen" | "browse" | "radio" | "library";
@@ -102,13 +103,11 @@ export function Sidebar({
               className="flex items-center gap-[11px] rounded-[9px] text-left transition-transform hover:scale-[1.02]"
               style={{ padding: "6px 4px" }}
             >
-              <div
-                className="shrink-0 rounded-[9px]"
-                style={{
-                  width: 34,
-                  height: 34,
-                  background: `linear-gradient(135deg, ${withAlpha(colors.amber, 22)}, ${withAlpha(colors.orchid, 22)})`,
-                }}
+              <AlbumArt
+                album={tracks[0]?.album ?? ""}
+                shadow={false}
+                className="shrink-0"
+                style={{ width: 34, height: 34 }}
               />
               <div className="min-w-0">
                 <div

@@ -246,12 +246,3 @@ input[type="range"].player-range::-moz-range-track {
 .aurelia-row-hover:hover {
   background: color-mix(in oklch, var(--aurelia-ink) 5%, transparent);
 }
-
-/* ---------- vinyl reveal on artwork hover ---------- */
-.vinyl-reveal {
-  transform: translateX(0);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.group:hover .vinyl-reveal {
-  transform: translateX(14%);
-}
