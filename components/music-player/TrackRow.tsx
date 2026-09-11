@@ -1,0 +1,81 @@
+"use client";
+
+import { Heart } from "lucide-react";
+import { Song } from "@/types/music";
+import { colors } from "@/lib/theme";
+import { formatTime } from "@/lib/format";
+import { AlbumArt } from "./AlbumArt";
+
+export function TrackRow({
+  song,
+  active = false,
+  isPlaying = false,
+  onPlay,
+  isFavorite,
+  onToggleFavorite,
+  thumbSize = 34,
+  titleSize = 13,
+  subSize = 11.5,
+  className = "",
+}: {
+  song: Song;
+  active?: boolean;
+  isPlaying?: boolean;
+  onPlay: () => void;
+  isFavorite?: boolean;
+  onToggleFavorite?: () => void;
+  thumbSize?: number;
+  titleSize?: number;
+  subSize?: number;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`group flex items-center gap-3 rounded-xl transition-colors ${className}`}
+      style={{ padding: "5px 6px" }}
+    >
+      <button
+        type="button"
+        onClick={onPlay}
+        className="flex items-center gap-3 min-w-0 flex-1 text-left"
+      >
+        <AlbumArt
+          album={song.album}
+          radius={Math.round(thumbSize * 0.2)}
+          shadow={false}
+          isPlaying={isPlaying && active}
+          className="shrink-0"
+          style={{ width: thumbSize, height: thumbSize }}
+        />
+        <div className="min-w-0">
+          <div
+            className="truncate"
+            style={{ fontSize: titleSize, color: active ? colors.amber : colors.ink2 }}
+          >
+            {song.title}
+          </div>
+          <div className="truncate" style={{ fontSize: subSize, color: colors.muted2 }}>
+            {song.artist}
+          </div>
+        </div>
+      </button>
+      {onToggleFavorite && (
+        <button
+          type="button"
+          onClick={onToggleFavorite}
+          aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+          className="shrink-0 opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
+          style={{
+            color: isFavorite ? colors.amber : colors.muted,
+            opacity: isFavorite ? 1 : undefined,
+          }}
+        >
+          <Heart size={13} fill={isFavorite ? "currentColor" : "none"} />
+        </button>
+      )}
+      <span className="shrink-0 tabular-nums" style={{ fontSize: subSize, color: colors.muted3 }}>
+        {formatTime(song.duration)}
+      </span>
+    </div>
+  );
+}

@@ -1,26 +1,164 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: oklch(0.15 0.014 65);
+  --foreground: oklch(0.92 0.01 80);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-dm-sans);
+  --font-serif: var(--font-instrument-serif);
+  --font-label: var(--font-archivo);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  color-scheme: dark;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overscroll-behavior-y: none;
+}
+
+/* ---------- scrollbars ---------- */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.thin-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.thin-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background: oklch(0.98 0.01 80 / 0.12);
+  border-radius: 999px;
+}
+
+/* ---------- ambient glow blobs ---------- */
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.75; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+.animate-glow-pulse {
+  animation: glowPulse 9s ease-in-out infinite;
+}
+
+/* ---------- sheen sweep across featured cards ---------- */
+@keyframes sheen {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(320%); }
+}
+.animate-sheen {
+  animation: sheen 7s ease-in-out infinite;
+}
+
+/* ---------- gentle float for hero art ---------- */
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.animate-float-y {
+  animation: floatY 7s ease-in-out infinite;
+}
+
+/* ---------- record-badge spin ---------- */
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spinSlow 6s linear infinite;
+}
+
+/* ---------- equalizer bars ---------- */
+@keyframes eq {
+  0% { transform: scaleY(0.22); }
+  100% { transform: scaleY(1); }
+}
+.eq-bar {
+  animation: eq 1.1s ease-in-out infinite alternate;
+  transform-origin: center bottom;
+}
+
+/* ---------- marquee for overflowing titles ---------- */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-100% + 100vw)); }
+}
+.animate-marquee {
+  animation: marquee 13s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-glow-pulse,
+  .animate-sheen,
+  .animate-float-y,
+  .animate-spin-slow,
+  .eq-bar,
+  .animate-marquee {
+    animation: none !important;
+  }
+}
+
+/* ---------- custom range slider reset ---------- */
+input[type="range"].player-range {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+input[type="range"].player-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 0;
+  width: 0;
+}
+input[type="range"].player-range::-moz-range-thumb {
+  height: 0;
+  width: 0;
+  border: none;
+}
+input[type="range"].player-range::-moz-range-track {
+  background: transparent;
+}
+
+/* ---------- focus ---------- */
+:focus-visible {
+  outline: 2px solid oklch(0.78 0.14 70 / 0.7);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.4); }
+  60% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+.animate-heart-pop {
+  animation: heartPop 0.4s ease;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes sheetUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
 }

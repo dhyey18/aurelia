@@ -1,3 +1,7 @@
+# aurelia
+
+A premium, nocturnal music player built with Next.js — sidebar library, persistent now-playing rail, and a dedicated mobile experience.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
