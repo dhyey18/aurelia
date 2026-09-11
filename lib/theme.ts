@@ -27,12 +27,9 @@ export const colors = {
 
 /** Per-album gradient identity, kept inside the amber/orchid family for cohesion. */
 export const albumGradients: Record<string, [string, string]> = {
-  "Halcyon Drift": ["oklch(0.58 0.16 70)", "oklch(0.4 0.13 330)"],
-  "Soft Machinery": ["oklch(0.6 0.15 45)", "oklch(0.42 0.13 15)"],
-  "Nocturne Club": ["oklch(0.5 0.14 290)", "oklch(0.38 0.15 330)"],
-  Fieldnotes: ["oklch(0.56 0.15 35)", "oklch(0.42 0.14 70)"],
-  Longshore: ["oklch(0.5 0.1 220)", "oklch(0.36 0.09 260)"],
-  "Between Rooms": ["oklch(0.55 0.15 340)", "oklch(0.4 0.13 15)"],
+  "Golden Era Sessions": ["oklch(0.58 0.16 70)", "oklch(0.4 0.13 330)"],
+  "Vintage Soul Radio": ["oklch(0.6 0.15 45)", "oklch(0.42 0.13 15)"],
+  "Weekend Classic Collection": ["oklch(0.5 0.14 290)", "oklch(0.38 0.15 330)"],
 };
 
 export function albumGradientFor(album: string): [string, string] {

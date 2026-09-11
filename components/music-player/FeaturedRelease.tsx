@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Song } from "@/types/music";
 import { colors, albumGradientFor } from "@/lib/theme";
 import { albums } from "@/data/albums";
+import { trackCount } from "@/lib/format";
 import { AlbumArt } from "./AlbumArt";
 
 export function FeaturedRelease({
@@ -61,7 +62,7 @@ export function FeaturedRelease({
         </div>
         <div style={{ fontSize: 15, color: colors.ink3 }}>
           {artist}
-          {info ? ` · ${info.year} · ${tracks.length} tracks · ${info.genre}` : ""}
+          {info ? ` · ${info.year} · ${trackCount(tracks.length)} · ${info.genre}` : ""}
         </div>
         <div className="flex flex-wrap gap-[11px] mt-1">
           <motion.button

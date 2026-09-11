@@ -5,35 +5,19 @@ export type AlbumInfo = {
 };
 
 export const albums: Record<string, AlbumInfo> = {
-  "Halcyon Drift": {
-    year: 2026,
-    genre: "Dream pop",
-    blurb:
-      "Neon Atlas' fourth record trades synth haze for open air — tracked to tape in a converted chapel.",
-  },
-  "Soft Machinery": {
-    year: 2025,
-    genre: "Bedroom soul",
-    blurb: "Mimi Okonjo's home-recorded answer to a loud year.",
-  },
-  "Nocturne Club": {
+  "Golden Era Sessions": {
     year: 2024,
-    genre: "Cold wave",
-    blurb: "The Hourglass Set, live off the floor at 2am.",
+    genre: "60s–70s mix",
+    blurb: "An hour of golden-era favorites, mixed for slow evenings.",
   },
-  Fieldnotes: {
-    year: 2025,
-    genre: "Ambient folk",
-    blurb: "Auberge's diary set to tape hiss and open tunings.",
+  "Vintage Soul Radio": {
+    year: 2024,
+    genre: "Retro soul mix",
+    blurb: "A late-night retro set for old vintage souls.",
   },
-  Longshore: {
+  "Weekend Classic Collection": {
     year: 2023,
-    genre: "Slowcore",
-    blurb: "Sable Youth, recorded across three coastal winters.",
-  },
-  "Between Rooms": {
-    year: 2026,
-    genre: "Art pop",
-    blurb: "Kaveh Rahimi's most unguarded record yet.",
+    genre: "Bollywood classics jukebox",
+    blurb: "Saregama's weekend jukebox, built around Dekha Ek Khwab.",
   },
 };

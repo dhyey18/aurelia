@@ -3,6 +3,7 @@
 import { Song } from "@/types/music";
 import { colors } from "@/lib/theme";
 import { topPlayed } from "@/lib/catalog";
+import { trackCount } from "@/lib/format";
 import { featuredAlbum } from "@/data/songs";
 import { AlbumArt } from "./AlbumArt";
 import { FeaturedRelease } from "./FeaturedRelease";
@@ -85,7 +86,7 @@ export function ListenView({
               {featuredAlbum}
             </div>
             <div style={{ fontSize: 13, color: colors.ink3 }}>
-              {featuredTracks[0]?.artist} · {featuredTracks.length} tracks
+              {featuredTracks[0]?.artist} · {trackCount(featuredTracks.length)}
             </div>
           </div>
         </button>

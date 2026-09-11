@@ -42,3 +42,7 @@ next-env.d.ts
 
 # design reference export (not app source)
 /Aurelia Music Player*.html
+
+# local audio source + large/likely-copyrighted media — never publish these
+/yt/
+/public/audio/

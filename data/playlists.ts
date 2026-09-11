@@ -2,28 +2,18 @@ import { Playlist } from "@/types/music";
 
 export const playlists: Playlist[] = [
   {
-    id: "late-transmission",
-    name: "Late Transmission",
-    songIds: ["slow-reveal", "cold-room-warm-light", "glass-horizon", "nightbloom"],
+    id: "late-night-retro",
+    name: "Late Night Retro",
+    songIds: ["retro-vintage-souls", "golden-era-60s-70s"],
   },
   {
-    id: "cassette-sunlight",
-    name: "Cassette Sunlight",
-    songIds: ["paper-lanterns", "afterglow", "everything-analog"],
+    id: "saregama-weekend",
+    name: "Saregama Weekend",
+    songIds: ["weekend-classic-dekha-ek-khwab"],
   },
   {
-    id: "deep-focus-no-words",
-    name: "Deep Focus, No Words",
-    songIds: ["velvet-static", "tidewater", "second-language", "glass-horizon"],
-  },
-  {
-    id: "kitchen-floor-dancing",
-    name: "Kitchen Floor Dancing",
-    songIds: ["paper-lanterns", "afterglow", "slow-reveal"],
-  },
-  {
-    id: "rain-on-the-a4",
-    name: "Rain on the A4",
-    songIds: ["tidewater", "nightbloom", "second-language"],
+    id: "full-session-mix",
+    name: "Full Session Mix",
+    songIds: ["golden-era-60s-70s", "retro-vintage-souls", "weekend-classic-dekha-ek-khwab"],
   },
 ];

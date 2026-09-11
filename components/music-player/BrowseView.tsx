@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Song } from "@/types/music";
 import { colors } from "@/lib/theme";
 import { groupByAlbum } from "@/lib/catalog";
+import { trackCount } from "@/lib/format";
 import { AlbumArt } from "./AlbumArt";
 
 export function BrowseView({
@@ -37,7 +38,7 @@ export function BrowseView({
                 {album.name}
               </div>
               <div className="truncate" style={{ fontSize: 12.5, color: colors.muted2 }}>
-                {album.artist} · {album.tracks.length} tracks
+                {album.artist} · {trackCount(album.tracks.length)}
               </div>
               {album.blurb && (
                 <div
