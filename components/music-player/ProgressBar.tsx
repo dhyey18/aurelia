@@ -77,7 +77,8 @@ export function ProgressBar({
             className="absolute inset-y-0 left-0 rounded-full"
             style={{
               width: `${displayRatio * 100}%`,
-              background: colors.ink,
+              background: `linear-gradient(to right, ${colors.amber}, ${colors.orchid})`,
+              boxShadow: `0 0 10px ${withAlpha(colors.amber, 55)}`,
               transition: isDragging ? "none" : "width 0.1s linear",
             }}
           />
@@ -85,10 +86,10 @@ export function ProgressBar({
             className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 rounded-full transition-opacity"
             style={{
               left: `${displayRatio * 100}%`,
-              width: 11,
-              height: 11,
+              width: 12,
+              height: 12,
               background: colors.ink,
-              boxShadow: `0 0 14px ${colors.amber}`,
+              boxShadow: `0 0 0 2px ${withAlpha(colors.dark, 40)}, 0 0 14px ${colors.amber}`,
               opacity: isDragging ? 1 : undefined,
             }}
           />

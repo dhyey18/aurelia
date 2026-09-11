@@ -5,6 +5,7 @@ import { Song } from "@/types/music";
 import { colors } from "@/lib/theme";
 import { formatTime } from "@/lib/format";
 import { AlbumArt } from "./AlbumArt";
+import { EqIndicator } from "./EqIndicator";
 
 export function TrackRow({
   song,
@@ -39,13 +40,22 @@ export function TrackRow({
         onClick={onPlay}
         className="flex items-center gap-3 min-w-0 flex-1 text-left"
       >
-        <AlbumArt
-          album={song.album}
-          shadow={false}
-          isPlaying={isPlaying && active}
-          className="shrink-0"
-          style={{ width: thumbSize, height: thumbSize }}
-        />
+        <div className="relative shrink-0" style={{ width: thumbSize, height: thumbSize }}>
+          <AlbumArt
+            album={song.album}
+            shadow={false}
+            isPlaying={isPlaying && active}
+            className="h-full w-full"
+          />
+          {active && isPlaying && (
+            <span
+              className="absolute -bottom-1 -right-1 flex items-center justify-center rounded-full"
+              style={{ width: 18, height: 18, background: colors.dark, boxShadow: `0 0 0 2px ${colors.dark}` }}
+            >
+              <EqIndicator />
+            </span>
+          )}
+        </div>
         <div className="min-w-0">
           <div
             className="truncate"

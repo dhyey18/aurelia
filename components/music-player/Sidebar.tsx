@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Playlist, Song } from "@/types/music";
 import { colors, withAlpha } from "@/lib/theme";
 import { songListMeta } from "@/lib/format";
@@ -61,24 +62,31 @@ export function Sidebar({
               type="button"
               onClick={() => onNavigate(item.key)}
               aria-current={active}
-              className="flex items-center gap-3 rounded-[11px] text-left transition-colors"
+              className="relative flex items-center gap-3 rounded-[11px] text-left transition-colors"
               style={{
                 padding: "10px 12px",
-                background: active ? colors.lineSoft : "transparent",
                 color: active ? colors.ink : colors.muted,
                 fontSize: 14.5,
                 fontWeight: active ? 500 : 400,
               }}
             >
+              {active && (
+                <motion.span
+                  layoutId="sidebar-nav-pill"
+                  className="absolute inset-0 rounded-[11px]"
+                  style={{ background: colors.lineSoft }}
+                  transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                />
+              )}
               <span
-                className="rounded-full shrink-0"
+                className="relative rounded-full shrink-0"
                 style={
                   active
-                    ? { width: 7, height: 7, background: colors.amber }
+                    ? { width: 7, height: 7, background: colors.amber, boxShadow: `0 0 8px ${colors.amber}` }
                     : { width: 7, height: 7, border: `1px solid ${colors.faint}` }
                 }
               />
-              {item.label}
+              <span className="relative">{item.label}</span>
             </button>
           );
         })}

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Pause } from "lucide-react";
-import { colors } from "@/lib/theme";
+import { colors, withAlpha } from "@/lib/theme";
 import { AlbumArt } from "./AlbumArt";
 import { Visualizer } from "./Visualizer";
 import { UseAudioPlayerReturn } from "@/hooks/useAudioPlayer";
@@ -14,8 +14,9 @@ export function MiniPlayer({
   player: UseAudioPlayerReturn;
   onExpand: () => void;
 }) {
-  const { currentSong, isPlaying, togglePlay } = player;
+  const { currentSong, isPlaying, currentTime, duration, togglePlay } = player;
   if (!currentSong) return null;
+  const progress = duration > 0 ? Math.min(1, currentTime / duration) : 0;
 
   return (
     <div
@@ -29,13 +30,26 @@ export function MiniPlayer({
         }
       }}
       aria-label={`Now playing: ${currentSong.title} — expand player`}
-      className="aurelia-hardware flex lg:hidden items-center gap-3 rounded-2xl text-left mx-3.5 mb-2 cursor-pointer"
+      className="aurelia-hardware relative flex lg:hidden items-center gap-3 overflow-hidden rounded-2xl text-left mx-3.5 mb-2 cursor-pointer"
       style={{
         padding: "10px 12px",
         background: colors.bgMini,
         backdropFilter: "blur(14px)",
       }}
     >
+      <div
+        className="absolute inset-x-0 top-0 rounded-t-2xl"
+        style={{ height: 2, background: withAlpha(colors.ink, 10) }}
+      >
+        <div
+          className="h-full rounded-t-2xl"
+          style={{
+            width: `${progress * 100}%`,
+            background: `linear-gradient(to right, ${colors.amber}, ${colors.orchid})`,
+            transition: "width 0.2s linear",
+          }}
+        />
+      </div>
       <motion.div layoutId="now-playing-art" className="shrink-0" style={{ width: 40, height: 40 }}>
         <AlbumArt
           album={currentSong.album}

@@ -52,6 +52,7 @@ export function AureliaApp() {
       >
         <audio ref={audioRef} preload="metadata" />
         <AmbientBackground album={currentSong.album} />
+        <div className="aurelia-grain" aria-hidden="true" />
 
         <div className="relative flex flex-1 min-h-0 flex-col lg:grid lg:grid-cols-[248px_minmax(0,1fr)_372px]">
           <Sidebar
@@ -101,6 +102,7 @@ export function AureliaApp() {
                   favoriteIds={favorites}
                   onPlay={(id) => playSong(id, songData.map((s) => s.id))}
                   onToggleFavorite={toggleFavorite}
+                  onBrowse={() => setView("browse")}
                 />
               )}
             </div>

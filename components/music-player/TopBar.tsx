@@ -11,9 +11,10 @@ export function TopBar({ songs, onPlay }: { songs: Song[]; onPlay: (id: string) 
       <SearchBar songs={songs} onPlay={onPlay} className="flex-1 max-w-[380px]" />
       <div className="hidden sm:flex items-center gap-2">
         {["Mood", "Decade"].map((label) => (
-          <span
+          <button
             key={label}
-            className="font-label uppercase rounded-full"
+            type="button"
+            className="font-label uppercase rounded-full transition-colors hover:brightness-125"
             style={{
               fontSize: 10.5,
               letterSpacing: "0.14em",
@@ -23,7 +24,7 @@ export function TopBar({ songs, onPlay }: { songs: Song[]; onPlay: (id: string) 
             }}
           >
             {label}
-          </span>
+          </button>
         ))}
       </div>
       <ThemeToggle className="hidden sm:flex" />

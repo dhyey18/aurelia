@@ -246,3 +246,61 @@ input[type="range"].player-range::-moz-range-track {
 .aurelia-row-hover:hover {
   background: color-mix(in oklch, var(--aurelia-ink) 5%, transparent);
 }
+
+/* ---------- film grain: a fixed, faint noise layer that keeps every gradient
+   from looking flat/digital — the "velvet" texture across the whole room. ---------- */
+.aurelia-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- slow drifting glow for the ambient background ---------- */
+@keyframes driftGlow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(3%, -4%) scale(1.06); }
+  66% { transform: translate(-3%, 3%) scale(0.97); }
+}
+.animate-drift-glow {
+  animation: driftGlow 18s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-drift-glow {
+    animation: none !important;
+  }
+}
+
+/* ---------- selection ---------- */
+::selection {
+  background: color-mix(in oklch, var(--aurelia-amber) 55%, transparent);
+  color: var(--aurelia-dark);
+}
+
+/* ---------- mini equalizer badge (currently-playing indicator in lists) ---------- */
+.eq-mini {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 11px;
+}
+.eq-mini span {
+  width: 2.5px;
+  border-radius: 1px;
+  background: linear-gradient(to top, var(--aurelia-amber), var(--aurelia-orchid));
+  transform-origin: center bottom;
+  animation: eq 0.9s ease-in-out infinite alternate;
+}
+.eq-mini span:nth-child(1) { height: 45%; animation-duration: 0.7s; }
+.eq-mini span:nth-child(2) { height: 100%; animation-duration: 1.05s; animation-delay: 0.12s; }
+.eq-mini span:nth-child(3) { height: 65%; animation-duration: 0.85s; animation-delay: 0.24s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .eq-mini span {
+    animation: none !important;
+  }
+}

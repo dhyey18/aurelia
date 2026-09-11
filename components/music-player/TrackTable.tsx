@@ -5,6 +5,7 @@ import { Song } from "@/types/music";
 import { colors } from "@/lib/theme";
 import { formatTime } from "@/lib/format";
 import { AlbumArt } from "./AlbumArt";
+import { EqIndicator } from "./EqIndicator";
 
 const GRID = "28px minmax(0,2.1fr) minmax(0,1.5fr) 64px 50px 26px";
 
@@ -55,11 +56,17 @@ export function TrackTable({
             style={{ gridTemplateColumns: GRID, gap: 16, padding: "9px 12px" }}
             onClick={() => onPlay(song.id)}
           >
-            <span
-              className="hidden md:inline font-sans font-extrabold tracking-tight tabular-nums"
-              style={{ fontSize: 21, color: active ? colors.amber : colors.faint }}
-            >
-              {i + 1}
+            <span className="hidden md:flex items-center justify-start" style={{ height: 21 }}>
+              {active && isPlaying ? (
+                <EqIndicator />
+              ) : (
+                <span
+                  className="font-sans font-extrabold tracking-tight tabular-nums"
+                  style={{ fontSize: 21, color: active ? colors.amber : colors.faint }}
+                >
+                  {i + 1}
+                </span>
+              )}
             </span>
             <div className="flex items-center gap-3 min-w-0 flex-1">
               <AlbumArt

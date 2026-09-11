@@ -24,20 +24,30 @@ export function AmbientBackground({ album }: { album: string }) {
           transition={{ duration: 1.6, ease: "easeInOut" }}
         >
           <div
-            className="absolute -top-[180px] left-[120px] rounded-full blur-[40px] animate-glow-pulse"
+            className="absolute -top-[180px] left-[120px] rounded-full blur-[50px] animate-glow-pulse animate-drift-glow"
             style={{
-              width: 520,
-              height: 420,
-              background: `radial-gradient(closest-side, ${withAlpha(from, 22)}, transparent)`,
+              width: 560,
+              height: 460,
+              background: `radial-gradient(closest-side, ${withAlpha(from, 28)}, transparent)`,
             }}
           />
           <div
-            className="absolute -bottom-[160px] right-[220px] rounded-full blur-[44px] animate-glow-pulse"
+            className="absolute -bottom-[160px] right-[220px] rounded-full blur-[54px] animate-glow-pulse animate-drift-glow"
             style={{
-              width: 480,
-              height: 400,
-              background: `radial-gradient(closest-side, ${withAlpha(to, 20)}, transparent)`,
+              width: 520,
+              height: 440,
+              background: `radial-gradient(closest-side, ${withAlpha(to, 26)}, transparent)`,
               animationDelay: "1.5s",
+            }}
+          />
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full blur-[70px] animate-drift-glow"
+            style={{
+              width: 700,
+              height: 700,
+              background: `radial-gradient(closest-side, ${withAlpha(from, 8)}, transparent)`,
+              animationDelay: "4s",
+              animationDuration: "26s",
             }}
           />
         </motion.div>
