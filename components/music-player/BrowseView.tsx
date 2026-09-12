@@ -42,7 +42,7 @@ export function BrowseView({
         />
       ) : (
         <>
-      <div className="flex flex-wrap gap-x-6 gap-y-3">
+      <div className="flex flex-wrap justify-center sm:justify-start gap-x-6 gap-y-3">
         {genres.map((genre, i) => {
           const active = genre === filter;
           const Icon = CATEGORY_ICONS[i % CATEGORY_ICONS.length];
@@ -102,9 +102,9 @@ export function BrowseView({
             <div
               className="pointer-events-none absolute select-none font-sans font-extrabold tracking-tight"
               style={{
-                fontSize: 74,
+                fontSize: 64,
                 lineHeight: 1,
-                top: -10,
+                top: 4,
                 left: 8,
                 color: withAlpha(colors.ink, 8),
                 zIndex: 0,

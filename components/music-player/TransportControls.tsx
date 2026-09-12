@@ -42,18 +42,19 @@ export function TransportControls({
   size?: "md" | "lg";
 }) {
   const heroSize = size === "lg" ? 68 : 58;
-  const triSize = size === "lg" ? 13 : 11;
-  const iconSize = size === "lg" ? 16 : 15;
+  const triSize = size === "lg" ? 14 : 12;
+  const iconSize = size === "lg" ? 17 : 16;
+  const tapSize = size === "lg" ? 44 : 40;
 
   return (
-    <div className="flex items-center justify-center gap-6" style={{ padding: "0 6px" }}>
+    <div className="flex items-center justify-center gap-2" style={{ padding: "0 2px" }}>
       <button
         type="button"
         onClick={onToggleShuffle}
         aria-label="Toggle shuffle"
         aria-pressed={shuffle}
-        className="transition-colors"
-        style={{ fontSize: iconSize, color: shuffle ? colors.amber : colors.muted }}
+        className="flex items-center justify-center rounded-full transition-colors"
+        style={{ width: tapSize, height: tapSize, color: shuffle ? colors.amber : colors.muted }}
       >
         <Shuffle size={iconSize} />
       </button>
@@ -64,7 +65,8 @@ export function TransportControls({
         aria-label="Previous track"
         whileTap={{ scale: 0.85 }}
         whileHover={{ scale: 1.1 }}
-        className="flex items-center justify-center"
+        className="flex items-center justify-center rounded-full"
+        style={{ width: tapSize, height: tapSize }}
       >
         <Triangle direction="left" size={triSize} />
       </motion.button>
@@ -99,7 +101,8 @@ export function TransportControls({
         aria-label="Next track"
         whileTap={{ scale: 0.85 }}
         whileHover={{ scale: 1.1 }}
-        className="flex items-center justify-center"
+        className="flex items-center justify-center rounded-full"
+        style={{ width: tapSize, height: tapSize }}
       >
         <Triangle direction="right" size={triSize} />
       </motion.button>
@@ -109,8 +112,8 @@ export function TransportControls({
         onClick={onCycleRepeat}
         aria-label={`Repeat: ${repeat}`}
         aria-pressed={repeat !== "off"}
-        className="transition-colors"
-        style={{ fontSize: iconSize, color: repeat !== "off" ? colors.amber : colors.muted }}
+        className="flex items-center justify-center rounded-full transition-colors"
+        style={{ width: tapSize, height: tapSize, color: repeat !== "off" ? colors.amber : colors.muted }}
       >
         {repeat === "one" ? <Repeat1 size={iconSize} /> : <Repeat size={iconSize} />}
       </button>

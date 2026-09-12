@@ -57,17 +57,28 @@ export function NowPlayingSheet({
           className="aurelia-hardware fixed inset-0 z-50 flex flex-col lg:hidden overflow-y-auto"
           style={{ background: colors.bg, padding: "18px 22px 28px" }}
         >
-          <div className="flex items-center justify-between shrink-0">
-            <button type="button" onClick={onClose} aria-label="Close now playing" style={{ color: colors.ink3 }}>
+          <div className="flex items-center justify-between shrink-0 -mx-2">
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close now playing"
+              className="flex items-center justify-center rounded-full"
+              style={{ width: 40, height: 40, color: colors.ink3 }}
+            >
               <ChevronDown size={22} />
             </button>
             <span
-              className="font-label uppercase"
-              style={{ fontSize: 9.5, letterSpacing: "0.22em", color: colors.muted }}
+              className="font-label uppercase truncate px-2"
+              style={{ fontSize: 9.5, letterSpacing: "0.22em", color: colors.muted, maxWidth: "50%" }}
             >
               {currentSong.album}
             </span>
-            <button type="button" aria-label="More options" style={{ color: colors.ink3 }}>
+            <button
+              type="button"
+              aria-label="More options"
+              className="flex items-center justify-center rounded-full"
+              style={{ width: 40, height: 40, color: colors.ink3 }}
+            >
               <MoreHorizontal size={18} />
             </button>
           </div>
@@ -103,8 +114,8 @@ export function NowPlayingSheet({
                 type="button"
                 onClick={() => toggleFavorite(currentSong.id)}
                 aria-label={favorites.has(currentSong.id) ? "Remove from favorites" : "Add to favorites"}
-                className="shrink-0 mt-1"
-                style={{ color: favorites.has(currentSong.id) ? colors.amber : colors.muted }}
+                className="flex shrink-0 items-center justify-center rounded-full -mr-2 -mt-1"
+                style={{ width: 44, height: 44, color: favorites.has(currentSong.id) ? colors.amber : colors.muted }}
               >
                 <Heart size={20} fill={favorites.has(currentSong.id) ? "currentColor" : "none"} />
               </button>

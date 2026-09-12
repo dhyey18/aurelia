@@ -40,7 +40,7 @@ export function RadioView({
   const [from, to] = albumGradientFor(currentSong.album);
 
   return (
-    <div className="relative flex flex-1 flex-col items-center justify-center gap-8 text-center py-8 overflow-hidden">
+    <div className="relative flex flex-1 flex-col items-center justify-center gap-5 sm:gap-8 text-center py-4 sm:py-8 overflow-hidden">
       <div
         className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full blur-[80px] animate-drift-glow"
         style={{
@@ -58,7 +58,7 @@ export function RadioView({
         Aurelia FM · {isPlaying ? STATIONS[0].freq : "—.—"} FM
       </div>
 
-      <div className="relative flex items-center justify-center" style={{ width: 260, height: 260 }}>
+      <div className="relative flex items-center justify-center w-[210px] h-[210px] sm:w-[260px] sm:h-[260px]">
         {/* orbital rings */}
         <div
           className="absolute inset-0 rounded-full animate-orbit"
@@ -90,10 +90,8 @@ export function RadioView({
           onClick={onTogglePlay}
           whileTap={{ scale: 0.95 }}
           aria-label={isPlaying ? "Pause radio" : "Play radio"}
-          className="relative flex flex-col items-center justify-center rounded-full"
+          className="relative flex flex-col items-center justify-center rounded-full w-[136px] h-[136px] sm:w-[168px] sm:h-[168px]"
           style={{
-            width: 168,
-            height: 168,
             background: `linear-gradient(140deg, ${from}, ${to})`,
             boxShadow: `0 24px 50px -20px ${withAlpha(from, 55)}`,
           }}
@@ -103,9 +101,9 @@ export function RadioView({
             style={{ boxShadow: "inset 0 1px 0 oklch(1 0 0 / 0.18)" }}
           />
           {isPlaying ? (
-            <Pause size={30} color={colors.dark} fill={colors.dark} strokeWidth={0} />
+            <Pause size={26} color={colors.dark} fill={colors.dark} strokeWidth={0} />
           ) : (
-            <Play size={30} color={colors.dark} fill={colors.dark} strokeWidth={0} style={{ marginLeft: 4 }} />
+            <Play size={26} color={colors.dark} fill={colors.dark} strokeWidth={0} style={{ marginLeft: 4 }} />
           )}
           {isPlaying && (
             <div

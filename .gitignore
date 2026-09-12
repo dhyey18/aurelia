@@ -45,4 +45,5 @@ next-env.d.ts
 
 # local audio source + large/likely-copyrighted media — never publish these
 /yt/
+/songs data/
 /public/audio/

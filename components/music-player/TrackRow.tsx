@@ -73,13 +73,15 @@ export function TrackRow({
           type="button"
           onClick={onToggleFavorite}
           aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
-          className="shrink-0 opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100"
+          className="flex shrink-0 items-center justify-center rounded-full transition-all group-hover:scale-110"
           style={{
+            width: 36,
+            height: 36,
             color: isFavorite ? colors.amber : colors.muted,
-            opacity: isFavorite ? 1 : undefined,
+            opacity: isFavorite ? 1 : 0.55,
           }}
         >
-          <Heart size={13} fill={isFavorite ? "currentColor" : "none"} />
+          <Heart size={15} fill={isFavorite ? "currentColor" : "none"} />
         </button>
       )}
       <span className="shrink-0 tabular-nums" style={{ fontSize: subSize, color: colors.muted3 }}>

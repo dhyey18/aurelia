@@ -115,17 +115,20 @@ export function ListenView({
               className="shrink-0"
               style={{ width: 84, height: 84 }}
             />
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <div
                 className="font-label uppercase"
                 style={{ fontSize: 9.5, letterSpacing: "0.22em", color: colors.amber }}
               >
                 Featured
               </div>
-              <div className="font-sans font-extrabold tracking-tight mt-1" style={{ fontSize: 28, lineHeight: 1.05, color: colors.ink }}>
+              <div
+                className="font-sans font-extrabold tracking-tight mt-1 line-clamp-2"
+                style={{ fontSize: 22, lineHeight: 1.15, color: colors.ink }}
+              >
                 {featuredAlbum}
               </div>
-              <div style={{ fontSize: 13, color: colors.ink3 }}>
+              <div className="truncate mt-0.5" style={{ fontSize: 13, color: colors.ink3 }}>
                 {featuredTracks[0]?.artist} · {trackCount(featuredTracks.length)}
               </div>
             </div>

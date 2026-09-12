@@ -37,12 +37,12 @@ export function MarqueeText({
         ref={textRef}
         className="inline-block whitespace-nowrap"
         style={style}
-        animate={shouldAnimate ? { x: [0, -overflow, -overflow, 0] } : { x: 0 }}
+        animate={shouldAnimate ? { x: [0, 0, -overflow, -overflow, 0] } : { x: 0 }}
         transition={
           shouldAnimate
             ? {
-                duration: Math.max(6, overflow / 30),
-                times: [0, 0.45, 0.55, 1],
+                duration: Math.max(8, overflow / 22),
+                times: [0, 0.16, 0.5, 0.66, 1],
                 repeat: Infinity,
                 ease: "easeInOut",
               }
