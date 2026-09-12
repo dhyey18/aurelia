@@ -43,9 +43,12 @@ export function BrowseView({
 
   return (
     <div className="flex flex-col gap-5 min-h-0">
-      <div className="flex items-center justify-between gap-4">
-        <div className="font-sans font-extrabold tracking-tight" style={{ fontSize: 25, color: colors.ink2 }}>
-          Browse the collection
+      <div className="flex items-center justify-between gap-3">
+        <div
+          className="font-sans font-extrabold tracking-tight shrink-0 text-[19px] sm:text-[25px]"
+          style={{ color: colors.ink2 }}
+        >
+          Browse
         </div>
         {albums.length > 0 && (
           <div className="flex shrink-0 rounded-full" style={{ padding: 3, background: colors.lineSoft }}>
@@ -60,7 +63,7 @@ export function BrowseView({
                 style={{
                   fontSize: 10,
                   letterSpacing: "0.1em",
-                  padding: "7px 14px",
+                  padding: "7px 12px",
                   background: mode === m ? colors.ink : "transparent",
                   color: mode === m ? colors.dark : colors.muted2,
                 }}
