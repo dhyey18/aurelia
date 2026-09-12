@@ -81,7 +81,10 @@ export function AureliaApp() {
                   songs={songData}
                   currentId={currentId}
                   isPlaying={isPlaying}
+                  favorites={favorites}
+                  onPlay={(id) => playSong(id, songData.map((s) => s.id))}
                   onPlayAlbum={(ids) => playSong(ids[0], ids)}
+                  onToggleFavorite={toggleFavorite}
                 />
               )}
               {view === "radio" && (
