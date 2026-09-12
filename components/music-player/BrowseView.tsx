@@ -8,6 +8,7 @@ import { colors, withAlpha } from "@/lib/theme";
 import { groupByAlbum } from "@/lib/catalog";
 import { trackCount } from "@/lib/format";
 import { AlbumArt } from "./AlbumArt";
+import { EmptyState } from "./EmptyState";
 
 const CATEGORY_ICONS = [LayoutGrid, Disc3, Headphones, RadioIcon, Mic2];
 
@@ -33,6 +34,14 @@ export function BrowseView({
         Browse the collection
       </div>
 
+      {albums.length === 0 ? (
+        <EmptyState
+          icon={Disc3}
+          title="Nothing to browse yet"
+          subtitle="Add tracks to the catalog and they'll show up here as albums."
+        />
+      ) : (
+        <>
       <div className="flex flex-wrap gap-x-6 gap-y-3">
         {genres.map((genre, i) => {
           const active = genre === filter;
@@ -129,6 +138,8 @@ export function BrowseView({
           </motion.button>
         ))}
       </div>
+        </>
+      )}
     </div>
   );
 }

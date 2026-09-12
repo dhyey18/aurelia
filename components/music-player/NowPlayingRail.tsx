@@ -1,7 +1,7 @@
 "use client";
 
 import { Reorder } from "framer-motion";
-import { Heart, Volume1, Volume2, VolumeX } from "lucide-react";
+import { Heart, Music, Volume1, Volume2, VolumeX } from "lucide-react";
 import { colors, radii } from "@/lib/theme";
 import { AlbumArt } from "./AlbumArt";
 import { MarqueeText } from "./MarqueeText";
@@ -9,6 +9,7 @@ import { Visualizer } from "./Visualizer";
 import { ProgressBar } from "./ProgressBar";
 import { TransportControls } from "./TransportControls";
 import { TrackRow } from "./TrackRow";
+import { EmptyState } from "./EmptyState";
 import { UseAudioPlayerReturn } from "@/hooks/useAudioPlayer";
 
 export function NowPlayingRail({ player }: { player: UseAudioPlayerReturn }) {
@@ -37,9 +38,7 @@ export function NowPlayingRail({ player }: { player: UseAudioPlayerReturn }) {
     reorderQueue,
   } = player;
 
-  if (!currentSong) return null;
-
-  const upNext = queue.slice(currentIndex + 1, currentIndex + 7);
+  const upNext = currentSong ? queue.slice(currentIndex + 1, currentIndex + 7) : [];
   const VolIcon = isMuted || volume === 0 ? VolumeX : volume < 0.6 ? Volume1 : Volume2;
 
   const progress = duration > 0 ? currentTime / duration : 0;
@@ -61,19 +60,29 @@ export function NowPlayingRail({ player }: { player: UseAudioPlayerReturn }) {
         >
           Now playing
         </div>
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={() => toggleFavorite(currentSong.id)}
-            aria-label={favorites.has(currentSong.id) ? "Remove from favorites" : "Add to favorites"}
-            style={{ color: favorites.has(currentSong.id) ? colors.amber : colors.muted }}
-          >
-            <Heart size={14} fill={favorites.has(currentSong.id) ? "currentColor" : "none"} />
-          </button>
-          <div style={{ fontSize: 11.5, color: colors.muted2 }}>from {currentSong.album}</div>
-        </div>
+        {currentSong && (
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => toggleFavorite(currentSong.id)}
+              aria-label={favorites.has(currentSong.id) ? "Remove from favorites" : "Add to favorites"}
+              style={{ color: favorites.has(currentSong.id) ? colors.amber : colors.muted }}
+            >
+              <Heart size={14} fill={favorites.has(currentSong.id) ? "currentColor" : "none"} />
+            </button>
+            <div style={{ fontSize: 11.5, color: colors.muted2 }}>from {currentSong.album}</div>
+          </div>
+        )}
       </div>
 
+      {!currentSong && (
+        <div className="flex flex-1 items-center justify-center">
+          <EmptyState icon={Music} title="Nothing playing" subtitle="Pick a track to bring the room to life." />
+        </div>
+      )}
+
+      {currentSong && (
+      <>
       <div className="mx-[5%] my-[3%]">
         <AlbumArt
           album={currentSong.album}
@@ -166,6 +175,8 @@ export function NowPlayingRail({ player }: { player: UseAudioPlayerReturn }) {
             ))}
           </Reorder.Group>
         </div>
+      )}
+      </>
       )}
     </aside>
   );

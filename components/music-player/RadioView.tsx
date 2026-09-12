@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Play, Pause } from "lucide-react";
+import { Play, Pause, Radio as RadioIcon } from "lucide-react";
 import { colors, withAlpha, albumGradientFor } from "@/lib/theme";
 import { Song } from "@/types/music";
 import { Visualizer } from "./Visualizer";
+import { EmptyState } from "./EmptyState";
 
 const STATIONS = [
   { name: "Late Night", freq: "88.5" },
@@ -20,10 +21,22 @@ export function RadioView({
   onTogglePlay,
 }: {
   onShuffleAll: () => void;
-  currentSong: Song;
+  currentSong: Song | null | undefined;
   isPlaying: boolean;
   onTogglePlay: () => void;
 }) {
+  if (!currentSong) {
+    return (
+      <div className="flex flex-1 flex-col items-center justify-center">
+        <EmptyState
+          icon={RadioIcon}
+          title="Nothing to tune in to yet"
+          subtitle="Add tracks to the catalog and Aurelia FM will come alive."
+        />
+      </div>
+    );
+  }
+
   const [from, to] = albumGradientFor(currentSong.album);
 
   return (

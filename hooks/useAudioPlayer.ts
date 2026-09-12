@@ -54,6 +54,7 @@ export function useAudioPlayer(songs: Song[]) {
   );
 
   const shuffleAll = useCallback(() => {
+    if (songs.length === 0) return;
     const ids = songs.map((s) => s.id);
     const randomId = ids[Math.floor(Math.random() * ids.length)];
     setShuffle(true);
